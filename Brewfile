@@ -63,3 +63,5 @@ cask "zoom"
 cask "docker"
 # etcher
 cask "balenaetcher"
+# gather
+cask "gather"
