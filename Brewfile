@@ -31,8 +31,6 @@ brew "zlib"
 brew "cmake"
 # Mac App store CLI
 brew "mas"
-# balena cli
-brew "balena-cli"
 # file sending
 brew "croc"
 # pulumi
