@@ -35,6 +35,8 @@ brew "mas"
 brew "croc"
 # pulumi
 brew "pulumi"
+# Java runtime
+brew "java"
 # Reverse proxy, secure introspectable tunnels to localhost
 cask "ngrok"
 # App to write, plan, collaborate, and get organized
