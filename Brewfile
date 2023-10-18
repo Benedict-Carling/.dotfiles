@@ -33,10 +33,18 @@ brew "cmake"
 brew "mas"
 # file sending
 brew "croc"
+# Image handling
+brew "ffmpeg"
 # pulumi
 brew "pulumi"
 # Java runtime
 brew "java"
+# Unknown but needed
+brew "jq"
+# Used to search and push to balena devices, ignored deps because it has a dependecy on node
+brew "balena-cli", args: ["ignore-dependencies"]
+# To be able to install an openapi version
+cask "chromium"
 # Reverse proxy, secure introspectable tunnels to localhost
 cask "ngrok"
 # App to write, plan, collaborate, and get organized
