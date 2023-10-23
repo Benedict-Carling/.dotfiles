@@ -15,6 +15,8 @@ brew "gnupg"
 brew "wget"
 # General-purpose lossless data-compression library
 brew "zlib"
+# Commit formatting tool
+brew "commitizen"
 # Promt to store GPG key passphrases into keychain
 brew "pinentry-mac"
 # Needed to build python
