@@ -59,7 +59,7 @@ if [ -f ~/.dotfiles/.tokens.zsh ]; then
     source ~/.dotfiles/.tokens.zsh
 fi
 
-alias gc="git commit"
+alias gc="cz commit"
 alias ga="git add"
 alias gco="git checkout"
 alias gco="git checkout"
