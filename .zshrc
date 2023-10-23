@@ -58,3 +58,10 @@ eval "$(pyenv init -)"
 if [ -f ~/.dotfiles/.tokens.zsh ]; then
     source ~/.dotfiles/.tokens.zsh
 fi
+
+alias gc="git commit"
+alias ga="git add"
+alias gco="git checkout"
+alias gco="git checkout"
+alias gp="git push"
+alias gl="git pull"
