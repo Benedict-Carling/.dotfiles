@@ -21,4 +21,4 @@
 	process = git-lfs filter-process
 	required = true
 [push]
-	autoSetupRemote = tracking
+	autoSetupRemote = true
