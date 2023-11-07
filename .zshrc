@@ -1,5 +1,7 @@
 # Needed to add poetry
 export PATH="/Users/benedictcarling/.local/bin:$PATH"
+# Add Java in path
+export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"
 
 # This is needed for the signing of GPG keys
 export GPG_TTY=$(tty)
