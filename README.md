@@ -19,6 +19,7 @@ xcode-select --install
 You can clone this repository into a new hidden directory using SSH or HTTPS. Make sure you recursivly install the sub modules to avoid only installing the root repository.
 
 - **SSH:**
+
   ```zsh
   git clone --recurse-submodules git@github.com:Benedict-Carling/.dotfiles.git ~/.dotfiles
   ```

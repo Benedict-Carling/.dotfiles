@@ -75,3 +75,5 @@ cask "docker"
 cask "balenaetcher"
 # gather
 cask "gather"
+# calibre ebook management
+cask "calibre"
