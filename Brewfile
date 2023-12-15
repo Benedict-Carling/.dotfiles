@@ -43,6 +43,10 @@ brew "pulumi"
 brew "java"
 # Unknown but needed
 brew "jq"
+# Install github-cli
+brew "gh"
+# Utility to programmatically access the clipboard
+brew "xclip"
 # Used to search and push to balena devices, ignored deps because it has a dependecy on node
 brew "balena-cli", args: ["ignore-dependencies"]
 # To be able to install an openapi version
