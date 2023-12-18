@@ -3,6 +3,10 @@ export PATH="/Users/benedictcarling/.local/bin:$PATH"
 # Add Java in path
 export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"
 
+export NVM_DIR="$HOME/.dotfiles/nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
 # This is needed for the signing of GPG keys
 export GPG_TTY=$(tty)
 
@@ -25,10 +29,6 @@ export ZSH="$HOME/.dotfiles/ohmyzsh"
 # Source zsh theme
 source ~/.dotfiles/powerlevel10k/powerlevel10k.zsh-theme
 
-
-export NVM_AUTO_USE=true
-export NVM_DIR="$HOME/.dotfiles/nvm"
-
 # Which plugins would you like to load?
 # Standard plugins can be found in $ZSH/plugins/
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
@@ -38,9 +38,6 @@ plugins=(git)
 
 # Add autocompletion plugin
 source ~/.dotfiles/zsh-autosuggestions/zsh-autosuggestions.zsh
-
-# Add zsh -nvm Plugin
-source ~/.dotfiles/zsh-nvm/zsh-nvm.plugin.zsh
 
 # Add syntax highlighting plugin (this should be the last plugin installed)
 source ~/.dotfiles/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
@@ -67,3 +64,4 @@ alias gco="git checkout"
 alias gco="git checkout"
 alias gp="git push"
 alias gl="git pull"
+alias glc="git rev-parse HEAD | pbcopy"
