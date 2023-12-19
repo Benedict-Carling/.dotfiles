@@ -62,7 +62,9 @@
     # virtualenv              # python virtual environment
     # context                 # user@host
     time                      # current time
-  )
+    pyenv                     # current python
+    node_version              # current nvm
+  ) 
 
   # Basic style options that define the overall prompt look.
   typeset -g POWERLEVEL9K_BACKGROUND=                            # transparent background
@@ -91,7 +93,7 @@
   # Grey Python Virtual Environment.
   typeset -g POWERLEVEL9K_VIRTUALENV_FOREGROUND=$grey
   # Don't show Python version.
-  typeset -g POWERLEVEL9K_VIRTUALENV_SHOW_PYTHON_VERSION=false
+  typeset -g POWERLEVEL9K_VIRTUALENV_SHOW_PYTHON_VERSION=true
   typeset -g POWERLEVEL9K_VIRTUALENV_{LEFT,RIGHT}_DELIMITER=
 
   # Blue current directory.
@@ -152,7 +154,41 @@
   # If set to true, time will update when you hit enter. This way prompts for the past
   # commands will contain the start times of their commands rather than the end times of
   # their preceding commands.
-  typeset -g POWERLEVEL9K_TIME_UPDATE_ON_COMMAND=false
+  typeset -g POWERLEVEL9K_TIME_UPDATE_ON_COMMAND=true
+
+  ##############################[ node_version: node.js version ]###############################
+  # Node version color.
+  typeset -g POWERLEVEL9K_NODE_VERSION_FOREGROUND=5
+  typeset -g POWERLEVEL9K_NODE_VERSION_BACKGROUND=0
+  # Show node version only when in a directory tree containing package.json.
+  typeset -g POWERLEVEL9K_NODE_VERSION_PROJECT_ONLY=false
+  # Custom icon.
+  # typeset -g POWERLEVEL9K_NODE_VERSION_VISUAL_IDENTIFIER_EXPANSION='⭐'
+
+  ################[ pyenv: python environment (https://github.com/pyenv/pyenv) ]################
+  # Pyenv color.
+  typeset -g POWERLEVEL9K_PYENV_FOREGROUND=3
+  typeset -g POWERLEVEL9K_PYENV_BACKGROUND=0
+  # Hide python version if it doesn't come from one of these sources.
+  typeset -g POWERLEVEL9K_PYENV_SOURCES=(shell local global)
+  # If set to false, hide python version if it's the same as global:
+  # $(pyenv version-name) == $(pyenv global).
+  typeset -g POWERLEVEL9K_PYENV_PROMPT_ALWAYS_SHOW=true
+  # If set to false, hide python version if it's equal to "system".
+  typeset -g POWERLEVEL9K_PYENV_SHOW_SYSTEM=true
+  # Pyenv segment format. The following parameters are available within the expansion.
+  #
+  # - P9K_CONTENT                Current pyenv environment (pyenv version-name).
+  # - P9K_PYENV_PYTHON_VERSION   Current python version (python --version).
+  #
+  # The default format has the following logic:
+  #
+  # 1. Display "$P9K_CONTENT $P9K_PYENV_PYTHON_VERSION" if $P9K_PYENV_PYTHON_VERSION is not
+  #   empty and unequal to $P9K_CONTENT.
+  # 2. Otherwise display just "$P9K_CONTENT".
+  typeset -g POWERLEVEL9K_PYENV_CONTENT_EXPANSION=' ${P9K_CONTENT}${${P9K_PYENV_PYTHON_VERSION:#$P9K_CONTENT}:+ $P9K_PYENV_PYTHON_VERSION}'
+  # Custom icon.
+  typeset -g POWERLEVEL9K_PYENV_VISUAL_IDENTIFIER_EXPANSION=''
 
   # Transient prompt works similarly to the builtin transient_rprompt option. It trims down prompt
   # when accepting a command line. Supported values:
