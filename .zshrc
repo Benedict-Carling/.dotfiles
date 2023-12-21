@@ -87,6 +87,11 @@ if [ -f ~/.dotfiles/.tokens.zsh ]; then
     source ~/.dotfiles/.tokens.zsh
 fi
 
+# ZSH Autocompletions, the init needs to be after all the fpaths have been apended
+[ -s /opt/homebrew/share/zsh/site-functions/_aws ] && fpath+=/opt/homebrew/share/zsh/site-functions;
+[ -s /opt/homebrew/share/zsh/site-functions/aws_zsh_completer.sh ] && source /opt/homebrew/share/zsh/site-functions/aws_zsh_completer.sh
+autoload -U compinit && compinit
+
 alias gc="cz commit"
 alias ga="git add"
 alias gco="git checkout"
