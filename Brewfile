@@ -49,6 +49,10 @@ brew "gh"
 brew "xclip"
 # Used to search and push to balena devices, ignored deps because it has a dependecy on node
 brew "balena-cli", args: ["ignore-dependencies"]
+# PNPM Dependency
+brew "corepack"
+# PNPM - faster npm
+brew "pnpm"
 # To be able to install an openapi version
 cask "chromium"
 # Reverse proxy, secure introspectable tunnels to localhost
