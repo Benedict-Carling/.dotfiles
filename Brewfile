@@ -83,5 +83,3 @@ cask "docker"
 cask "balenaetcher"
 # gather
 cask "gather"
-# Endpoint tester
-cask "insomnia"
