@@ -159,7 +159,7 @@
   ##############################[ node_version: node.js version ]###############################
   # Node version color.
   typeset -g POWERLEVEL9K_NODE_VERSION_FOREGROUND=5
-  typeset -g POWERLEVEL9K_NODE_VERSION_BACKGROUND=0
+  typeset -g POWERLEVEL9K_NODE_VERSION_BACKGROUND=
   # Show node version only when in a directory tree containing package.json.
   typeset -g POWERLEVEL9K_NODE_VERSION_PROJECT_ONLY=false
   # Custom icon.
@@ -168,7 +168,7 @@
   ################[ pyenv: python environment (https://github.com/pyenv/pyenv) ]################
   # Pyenv color.
   typeset -g POWERLEVEL9K_PYENV_FOREGROUND=3
-  typeset -g POWERLEVEL9K_PYENV_BACKGROUND=0
+  typeset -g POWERLEVEL9K_PYENV_BACKGROUND=
   # Hide python version if it doesn't come from one of these sources.
   typeset -g POWERLEVEL9K_PYENV_SOURCES=(shell local global)
   # If set to false, hide python version if it's the same as global:
