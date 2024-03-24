@@ -53,6 +53,8 @@ brew "xclip"
 # brew "corepack", args: ["ignore-dependencies"]
 # # PNPM - faster npm
 # brew "pnpm"
+# Ability to access clipboard with commad=nd shift V
+cask "flycut"
 # To be able to install an openapi version
 cask "chromium"
 # Reverse proxy, secure introspectable tunnels to localhost
@@ -63,6 +65,10 @@ cask "notion"
 cask "slack"
 # Music streaming service
 cask "spotify"
+# Postman
+cask "postman"
+# Git GUI client
+cask "gitkraken"
 # Open-source code editor
 cask "visual-studio-code"
 # Desktop client for GitHub repositories

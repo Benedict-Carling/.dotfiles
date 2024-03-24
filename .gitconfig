@@ -22,3 +22,7 @@
 	required = true
 [push]
 	autoSetupRemote = true
+[branch]
+	sort = committerdate
+[column]
+	ui = always
