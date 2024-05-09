@@ -56,7 +56,7 @@ brew "xclip"
 # Ability to access clipboard with commad=nd shift V
 cask "flycut"
 # To be able to install an openapi version
-cask "chromium"
+cask "google-chrome"
 # Reverse proxy, secure introspectable tunnels to localhost
 cask "ngrok"
 # App to write, plan, collaborate, and get organized

@@ -21,8 +21,6 @@ fi
 eval "$(/opt/homebrew/bin/brew shellenv)"
 
 # ZSH Autocompletions, the init needs to be after all the fpaths have been apended
-[ -s /opt/homebrew/share/zsh/site-functions/_aws ] && fpath+=/opt/homebrew/share/zsh/site-functions;
-[ -s /opt/homebrew/share/zsh/site-functions/aws_zsh_completer.sh ] && source /opt/homebrew/share/zsh/site-functions/aws_zsh_completer.sh
 autoload -U compinit && compinit
 
 # To tell Oh My Zsh to store zcompdum not in root home folder
