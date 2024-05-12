@@ -93,7 +93,6 @@ fi
 alias gc="cz commit"
 alias ga="git add"
 alias gco="git checkout"
-alias gco="git checkout"
 alias gp="git push"
-alias gl="git pull"
+alias gl="git pull --rebase"
 alias glc="git rev-parse HEAD | pbcopy"
