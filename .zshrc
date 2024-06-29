@@ -96,3 +96,6 @@ alias gco="git checkout"
 alias gp="git push"
 alias gl="git pull --rebase"
 alias glc="git rev-parse HEAD | pbcopy"
+
+# Finding disk usage
+alias du="ncdu --color dark -rr -x --exclude .git --exclude node_modules"
