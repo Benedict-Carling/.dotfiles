@@ -1,5 +1,7 @@
 tap "homebrew/bundle"
-# Clone of cat(1) with syntax highlighting and Git integration
+# Good for updating casks
+tap "buo/cask-upgrade"
+# print contents of files
 brew "bat"
 # aws cli
 brew "awscli"
@@ -89,3 +91,7 @@ cask "docker"
 cask "balenaetcher"
 # gather
 cask "gather"
+# browser
+cask "arc"
+# screen recording
+cask "loom"

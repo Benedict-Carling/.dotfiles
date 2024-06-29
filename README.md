@@ -57,6 +57,12 @@ brew bundle --file ~/.dotfiles/Brewfile
 3. Add the GPG key to GitHub's recognized GPG keys.
 4. You may need to add the path to pinentry-mac to the ".gpugp/gpg-agent.conf", e.g. pinentry-program /usr/local/bin/pinentry-mac
 
+### Step 6: Essential mac settings
+
+Warning: Your terminal does not have App Management permissions, so Homebrew will delete and reinstall the app.
+This may result in some configurations (like notification settings or location in the Dock/Launchpad) being lost.
+To fix this, go to System Settings > Privacy & Security > App Management and add or enable your terminal.
+
 ---
 
 ## 📚 Additional Resources

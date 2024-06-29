@@ -4,7 +4,10 @@ git submodule update --remote
 brew update
 brew upgrade
 brew upgrade --cask
-brew cleanup
-brew doctor
+
+brew cu --all -y 
 # remove uninstalled libraries
 brew bundle --force cleanup
+
+brew cleanup
+brew doctor
