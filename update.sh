@@ -12,4 +12,5 @@ brew bundle --force cleanup
 brew cleanup
 brew doctor
 
+nvm cache clear
 yarn cache clean
