@@ -99,3 +99,5 @@ cask "arc"
 cask "loom"
 # tool to access databases
 cask "tailscale"
+# Inspect databases
+cask "pgadmin4"
