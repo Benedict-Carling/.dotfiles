@@ -101,3 +101,5 @@ cask "loom"
 cask "tailscale"
 # Inspect databases
 cask "pgadmin4"
+# Flash card program
+cask "anki"
