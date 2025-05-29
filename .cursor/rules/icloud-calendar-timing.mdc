@@ -1,0 +1,114 @@
+---
+description: When using the apple mdc and interacting with calendars
+globs: 
+alwaysApply: false
+---
+# iCloud Calendar Timing Best Practices
+
+@context {
+  "type": "best_practices",
+  "domain": "apple_calendar_integration", 
+  "version": "1.0.0",
+  "purpose": "Prevent timezone and date calculation errors when creating calendar events"
+}
+
+## Issue: Calendar Event Time Zone and Date Calculation Quirks
+
+@problem {
+  "issue": "Incorrect event timing when using relative date calculations",
+  "causes": [
+    "Current time being added to calculations",
+    "Time zone interpretation issues", 
+    "Daylight saving time complications"
+  ],
+  "impact": "Events created at wrong times"
+}
+
+**Problem:** When creating calendar events in iCloud Calendar via AppleScript, using relative time calculations like `(current date) + (2 * days) + (9 * hours)` can result in incorrect event timing.
+
+**Solution:** Always use explicit date and time format when creating calendar events.
+
+## Correct AppleScript Date Format
+
+@format {
+  "correct": "DD/MM/YYYY HH:MM:SS",
+  "timezone": "Interpreted in system's local timezone",
+  "example": "31/05/2025 09:00:00"
+}
+
+### ✅ CORRECT - Use explicit date format
+```applescript
+osascript -e 'tell application "Calendar" to tell calendar "Calendar Name" to make new event with properties {summary:"Event Title", start date:date "DD/MM/YYYY HH:MM:SS", end date:date "DD/MM/YYYY HH:MM:SS"}'
+```
+
+### ❌ INCORRECT - Avoid relative time calculations
+```applescript
+osascript -e 'tell application "Calendar" to tell calendar "Calendar Name" to make new event with properties {summary:"Event Title", start date:(current date) + (X * days) + (Y * hours), end date:(current date) + (X * days) + (Z * hours)}'
+```
+
+## Implementation Guidelines
+
+@rules [
+  {
+    "id": "explicit_dates_only",
+    "severity": "error",
+    "description": "Always use explicit date/time strings, never relative calculations"
+  },
+  {
+    "id": "verify_events",
+    "severity": "warning", 
+    "description": "Verify created events immediately after creation"
+  },
+  {
+    "id": "standard_format",
+    "severity": "error",
+    "description": "Use DD/MM/YYYY HH:MM:SS format consistently"
+  },
+  {
+    "id": "dst_consideration",
+    "severity": "warning",
+    "description": "Consider daylight saving time transitions for future events"
+  }
+]
+
+## Verification Command
+
+@verification {
+  "command": "osascript verification",
+  "purpose": "Check event was created correctly",
+  "required": "Always run after event creation"
+}
+
+```applescript
+osascript -e 'tell application "Calendar" to tell calendar "Calendar Name" to get {summary, start date, end date, location} of (first event whose summary is "Event Title")'
+```
+
+## Working Example
+
+@example {
+  "scenario": "Saturday Park Run event",
+  "date": "May 31, 2025",
+  "time": "9:00-10:00 AM",
+  "location": "Bishops Park"
+}
+
+```applescript
+# Create event for Saturday, May 31, 2025, 9:00-10:00 AM
+osascript -e 'tell application "Calendar" to tell calendar "Ben & Lore" to make new event with properties {summary:"Park Run Bishops park", start date:date "31/05/2025 09:00:00", end date:date "31/05/2025 10:00:00"}'
+
+# Add location
+osascript -e 'tell application "Calendar" to tell calendar "Ben & Lore" to set location of (first event whose summary is "Park Run Bishops park") to "Bishops Park"'
+```
+
+## Key Takeaways
+
+@best_practices [
+  "Always use explicit date/time strings, never relative calculations",
+  "Verify created events immediately after creation",
+  "Format: DD/MM/YYYY HH:MM:SS",
+  "Test with different time zones if working across regions",
+  "Consider daylight saving time transitions when scheduling future events"
+]
+
+@version "1.0.0"
+@last_updated "2025-05-29"

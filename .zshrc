@@ -94,3 +94,5 @@ alias glc="git rev-parse HEAD | pbcopy"
 
 # Finding disk usage
 alias dus="ncdu --color dark -rr -x --exclude .git --exclude node_modules"
+
+export PATH="$HOME/.local/bin:$PATH"
