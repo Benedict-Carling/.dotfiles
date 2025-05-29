@@ -95,8 +95,6 @@ cask "balenaetcher"
 cask "gather"
 # browser
 cask "arc"
-# screen recording
-cask "loom"
 # tool to access databases
 cask "tailscale"
 # Inspect databases

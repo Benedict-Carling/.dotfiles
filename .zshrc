@@ -57,11 +57,6 @@ export PYENV_ROOT="$HOME/.dotfiles/pyenv"
 command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init -)"
 
-# NVM Setup
-export NVM_DIR="$HOME/.dotfiles/nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-
 # NVM auto
 # place this after nvm initialization!
 autoload -U add-zsh-hook
@@ -98,4 +93,4 @@ alias gl="git pull --rebase"
 alias glc="git rev-parse HEAD | pbcopy"
 
 # Finding disk usage
-alias du="ncdu --color dark -rr -x --exclude .git --exclude node_modules"
+alias dus="ncdu --color dark -rr -x --exclude .git --exclude node_modules"
