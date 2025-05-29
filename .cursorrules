@@ -1,0 +1,55 @@
+# Cursor Rules for Calendar Event Creation
+
+## iCloud Calendar Timing Best Practices
+
+### Issue: Calendar Event Time Zone and Date Calculation Quirks
+
+**Problem:** When creating calendar events in iCloud Calendar via AppleScript, using relative time calculations like `(current date) + (2 * days) + (9 * hours)` can result in incorrect event timing due to:
+
+- Current time being added to the calculation
+- Time zone interpretation issues
+- Daylight saving time complications
+
+**Solution:** Always use explicit date and time format when creating calendar events.
+
+### Correct AppleScript Date Format for iCloud Calendar Events:
+
+```applescript
+# ✅ CORRECT - Use explicit date format
+osascript -e 'tell application "Calendar" to tell calendar "Calendar Name" to make new event with properties {summary:"Event Title", start date:date "DD/MM/YYYY HH:MM:SS", end date:date "DD/MM/YYYY HH:MM:SS"}'
+
+# ❌ INCORRECT - Avoid relative time calculations
+osascript -e 'tell application "Calendar" to tell calendar "Calendar Name" to make new event with properties {summary:"Event Title", start date:(current date) + (X * days) + (Y * hours), end date:(current date) + (X * days) + (Z * hours)}'
+```
+
+### Date Format Standards:
+
+- Use DD/MM/YYYY HH:MM:SS format (e.g., "31/05/2025 09:00:00")
+- Times are interpreted in the system's local timezone
+- Always verify the created event shows the correct date and time
+
+### Verification Command:
+
+After creating an event, always verify with:
+
+```applescript
+osascript -e 'tell application "Calendar" to tell calendar "Calendar Name" to get {summary, start date, end date, location} of (first event whose summary is "Event Title")'
+```
+
+### Example Working Implementation:
+
+```applescript
+# Create event for Saturday, May 31, 2025, 9:00-10:00 AM
+osascript -e 'tell application "Calendar" to tell calendar "Ben & Lore" to make new event with properties {summary:"Park Run Bishops park", start date:date "31/05/2025 09:00:00", end date:date "31/05/2025 10:00:00"}'
+
+# Add location
+osascript -e 'tell application "Calendar" to tell calendar "Ben & Lore" to set location of (first event whose summary is "Park Run Bishops park") to "Bishops Park"'
+```
+
+### Key Takeaways:
+
+1. Always use explicit date/time strings, never relative calculations
+2. Verify created events immediately after creation
+3. Format: DD/MM/YYYY HH:MM:SS
+4. Test with different time zones if working across regions
+5. Consider daylight saving time transitions when scheduling future events

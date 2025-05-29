@@ -1,0 +1,251 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# MDC Rule Creation Guidelines
+
+@context {
+  "type": "rule_creation_guide",
+  "purpose": "Ensure proper .mdc format when creating new Cursor rules",
+  "version": "1.0.0",
+  "trigger": "When asked to create new Cursor rules or convert legacy rules"
+}
+
+## When to Use This Rule
+
+@triggers [
+  "User asks to create a new Cursor rule",
+  "User asks to turn conversation into a rule", 
+  "User mentions converting .cursorrules to .mdc",
+  "User asks to make a reusable rule",
+  "Need to document coding patterns or best practices"
+]
+
+## Modern .mdc Format Requirements
+
+@format_requirements {
+  "location": ".cursor/rules/",
+  "extension": ".mdc",
+  "structure": [
+    "frontmatter (required)",
+    "title (required)", 
+    "structured_content (required)",
+    "examples (recommended)",
+    "metadata_annotations (recommended)"
+  ]
+}
+
+### Required Frontmatter Structure
+```yaml
+---
+description: Single sentence describing when rule applies
+globs: ["**/*.ext", "path/**/*"]
+alwaysApply: false  # Optional, defaults to false for agent-requested rules
+---
+```
+
+### Required Content Structure
+```markdown
+# Rule Title
+
+@context {
+  "type": "rule_type",
+  "purpose": "what_this_rule_accomplishes", 
+  "version": "1.0.0"
+}
+
+## Implementation sections with @annotations
+
+@rules [
+  {
+    "id": "unique_rule_id",
+    "severity": "error|warning|info",
+    "description": "Clear rule description"
+  }
+]
+```
+
+## Rule Types and Behavior
+
+@rule_types {
+  "always": {
+    "behavior": "Always included in model context",
+    "frontmatter": "alwaysApply: true",
+    "use_case": "Fundamental project standards"
+  },
+  "auto_attached": {
+    "behavior": "Included when matching files are referenced", 
+    "frontmatter": "globs pattern matching",
+    "use_case": "File-type specific rules"
+  },
+  "agent_requested": {
+    "behavior": "AI decides when to include based on description",
+    "frontmatter": "alwaysApply: false or omitted",
+    "use_case": "Context-dependent guidance"
+  },
+  "manual": {
+    "behavior": "Only when explicitly mentioned with @ruleName",
+    "frontmatter": "special configuration needed",
+    "use_case": "Rarely used specialized rules"
+  }
+}
+
+## Best Practices for New Rules
+
+@best_practices [
+  {
+    "id": "descriptive_filename",
+    "rule": "Use kebab-case descriptive filenames",
+    "example": "api-validation-patterns.mdc"
+  },
+  {
+    "id": "clear_description", 
+    "rule": "Frontmatter description should clearly indicate when rule applies",
+    "example": "API validation patterns for Express routes"
+  },
+  {
+    "id": "appropriate_globs",
+    "rule": "Match globs to relevant file types/paths",
+    "example": ["**/*.ts", "src/api/**/*", "**/*.test.js"]
+  },
+  {
+    "id": "structured_annotations",
+    "rule": "Use @annotations for structured metadata",
+    "example": "@rules, @context, @examples, @format"
+  },
+  {
+    "id": "concise_content",
+    "rule": "Keep rules under 500 lines, split large concepts",
+    "reason": "Better AI context efficiency"
+  },
+  {
+    "id": "working_examples",
+    "rule": "Include practical, complete examples",
+    "reason": "AI needs concrete patterns to follow"
+  }
+]
+
+## Common .mdc Annotations
+
+@common_annotations {
+  "@context": "Rule metadata and purpose",
+  "@rules": "Array of rule objects with id, severity, description", 
+  "@format": "Format specifications and templates",
+  "@examples": "Implementation examples",
+  "@best_practices": "Array of best practice guidelines",
+  "@validation": "Validation rules and requirements",
+  "@implementation": "Implementation details and code",
+  "@patterns": "Common patterns and structures"
+}
+
+## Template for New Rules
+
+@template {
+  "basic_structure": "Use this as starting point for new rules"
+}
+
+```markdown
+---
+description: Brief description of when this rule applies
+globs: ["**/*.relevant"]
+---
+
+# Rule Title
+
+@context {
+  "type": "rule_category",
+  "purpose": "what_this_accomplishes",
+  "version": "1.0.0"
+}
+
+## Overview
+Brief explanation of the rule's purpose
+
+## Requirements
+
+@rules [
+  {
+    "id": "rule_identifier", 
+    "severity": "error",
+    "description": "What this rule enforces"
+  }
+]
+
+## Examples
+
+@examples {
+  "good": "Example of correct implementation",
+  "bad": "Example of what to avoid"
+}
+
+### ✅ Correct Pattern
+```language
+// Good example code
+```
+
+### ❌ Avoid This
+```language  
+// Bad example code
+```
+
+@version "1.0.0"
+@last_updated "YYYY-MM-DD"
+```
+
+## Migration from Legacy Format
+
+@migration_rules [
+  {
+    "action": "never_create_cursorrules",
+    "reason": ".cursorrules is deprecated",
+    "instead": "Always create .mdc files in .cursor/rules/"
+  },
+  {
+    "action": "convert_existing_legacy",
+    "process": "Move content to .mdc format with proper structure",
+    "location": ".cursor/rules/descriptive-name.mdc"
+  },
+  {
+    "action": "add_frontmatter",
+    "requirement": "All .mdc files must have YAML frontmatter",
+    "format": "description and globs at minimum"
+  },
+  {
+    "action": "structure_content", 
+    "requirement": "Use @annotations for structured data",
+    "benefit": "Better AI parsing and context efficiency"
+  }
+]
+
+## Key Differences from Legacy
+
+@legacy_vs_modern {
+  "legacy_cursorrules": {
+    "location": "Project root",
+    "format": "Plain text/markdown",
+    "structure": "Unstructured",
+    "status": "Deprecated"
+  },
+  "modern_mdc": {
+    "location": ".cursor/rules/",
+    "format": "Structured markdown with YAML frontmatter",
+    "structure": "Metadata annotations and JSON",
+    "status": "Current standard"
+  }
+}
+
+## Validation Checklist
+
+@validation_checklist [
+  "✅ File located in .cursor/rules/",
+  "✅ File has .mdc extension", 
+  "✅ Valid YAML frontmatter with description and globs",
+  "✅ Clear title and @context annotation",
+  "✅ Structured content with appropriate @annotations",
+  "✅ Working examples where applicable",
+  "✅ Version and last_updated metadata"
+]
+
+@version "1.0.0"
+@last_updated "2025-05-29"
