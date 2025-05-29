@@ -95,6 +95,8 @@ cask "balenaetcher"
 cask "gather"
 # browser
 cask "arc"
+# Claude Desktop AI assistant
+cask "claude"
 # tool to access databases
 cask "tailscale"
 # Inspect databases
