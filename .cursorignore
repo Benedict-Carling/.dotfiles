@@ -1,0 +1,62 @@
+# Build outputs and generated files
+Brewfile.lock.json
+*.lock
+*.log
+
+# Binary and media files
+*.webp
+*.jpg
+*.jpeg
+*.png
+*.gif
+*.ico
+*.pdf
+*.dmg
+*.zip
+*.tar.gz
+
+# macOS system files
+.DS_Store
+**/.DS_Store
+.AppleDouble
+.LSOverride
+Thumbs.db
+
+# Git submodules - these are external dependencies with their own repositories
+# and don't need to be indexed by Cursor for this dotfiles repo
+nvm/
+ohmyzsh/
+powerlevel10k/
+pyenv/
+zsh-autosuggestions/
+zsh-syntax-highlighting/
+
+# Sensitive configuration files
+.signingkey.gitconfig
+.tokens.zsh
+*.key
+*.pem
+*.p12
+
+# Version manager caches and binaries
+nvm/.cache/
+nvm/versions/
+pyenv/versions/
+pyenv/shims/
+
+# Oh My Zsh cache and logs
+ohmyzsh/cache/
+ohmyzsh/log/
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+*.temp 

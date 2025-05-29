@@ -4,6 +4,57 @@ This repository contains my dotfiles for bootstrapping a new Mac for development
 
 ---
 
+## 📁 Repository Structure
+
+This dotfiles repository is organized as follows:
+
+### Core Configuration Files
+
+- **`.zshrc`** - Zsh shell configuration with Oh My Zsh and Powerlevel10k theme
+- **`.gitconfig`** - Git global configuration
+- **`.p10k.zsh`** - Powerlevel10k theme configuration
+- **`Brewfile`** - Homebrew package list for automated installation
+
+### Git Submodules (External Dependencies)
+
+The repository includes several git submodules for shell enhancements:
+
+- **`nvm/`** - Node Version Manager for Node.js version management
+- **`ohmyzsh/`** - Oh My Zsh framework for zsh configuration
+- **`powerlevel10k/`** - Fast and customizable zsh theme
+- **`pyenv/`** - Python version management
+- **`zsh-autosuggestions/`** - Fish-like autosuggestions for zsh
+- **`zsh-syntax-highlighting/`** - Syntax highlighting for zsh
+
+### Ignore Files
+
+- **`.gitignore`** - Excludes sensitive files, build outputs, and binary files from git
+- **`.cursorignore`** - Excludes submodules, caches, and binary files from Cursor's index for better performance
+
+---
+
+## 🎯 Cursor IDE Setup
+
+This repository is optimized for use with Cursor IDE:
+
+### What's Indexed by Cursor
+
+- Core dotfiles (`.zshrc`, `.gitconfig`, etc.)
+- Configuration files (`.p10k.zsh`)
+- Package definitions (`Brewfile`)
+- Documentation (`README.md`)
+
+### What's Excluded from Cursor Index
+
+- **Git submodules** - These are external dependencies with their own repositories
+- **Binary files** - Wallpapers, images, and other non-text files
+- **Build outputs** - Generated lock files and caches
+- **Sensitive files** - GPG keys and tokens
+
+This keeps Cursor's index focused on the actual dotfiles configuration while excluding thousands of files from external dependencies that would slow down AI assistance.
+
+---
+
 ## 🚀 Getting Started
 
 ### Step 1: Install Apple's Command Line Tools
