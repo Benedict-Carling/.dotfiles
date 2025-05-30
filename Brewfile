@@ -57,8 +57,6 @@ brew "ncdu"
 # brew "corepack", args: ["ignore-dependencies"]
 # # PNPM - faster npm
 # brew "pnpm"
-# Ability to access clipboard with commad=nd shift V
-cask "flycut"
 # To be able to install an openapi version
 cask "google-chrome"
 # Reverse proxy, secure introspectable tunnels to localhost
