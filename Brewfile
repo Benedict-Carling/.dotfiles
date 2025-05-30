@@ -93,8 +93,6 @@ cask "docker"
 cask "balenaetcher"
 # gather
 cask "gather"
-# browser
-cask "arc"
 # Claude Desktop AI assistant
 cask "claude"
 # tool to access databases
