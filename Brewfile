@@ -9,8 +9,8 @@ brew "awscli"
 brew "git"
 # UNIX shell (command interpreter)
 brew "zsh"
-# Python code formatter
-brew "black"
+# Python code formatter - installed via pipx instead to avoid Homebrew python dependency
+# brew "black"
 # GNU Pretty Good Privacy (PGP) package
 brew "gnupg"
 # Internet file retriever
