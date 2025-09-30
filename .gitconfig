@@ -6,7 +6,7 @@
 [credential]
 	helper = osxkeychain
 [commit]
-	gpgsign = false
+	gpgsign = true
 [alias]
 	lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%ar) %C(bold blue)<%an>%Creset' --abbrev-commit
 [gpg]
