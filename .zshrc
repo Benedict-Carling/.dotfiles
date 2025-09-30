@@ -96,3 +96,7 @@ alias glc="git rev-parse HEAD | pbcopy"
 alias dus="ncdu --color dark -rr -x --exclude .git --exclude node_modules"
 
 export PATH="$HOME/.local/bin:$PATH"
+export PATH="/Users/benedictcarling/bin:$PATH"
+
+export EDITOR="code --wait --reuse-window"
+export VISUAL="code --wait --reuse-window"
