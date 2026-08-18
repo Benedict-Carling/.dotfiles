@@ -3,10 +3,6 @@ set -e
 
 echo "🔄 Updating dotfiles..."
 
-# Update git submodules (nvm)
-echo "Updating git submodules..."
-git submodule update --remote --merge
-
 # Update Homebrew
 echo "Updating Homebrew..."
 brew update
@@ -30,9 +26,8 @@ fi
 
 # Clear caches
 echo "🗑️  Clearing caches..."
-nvm cache clear
-yarn cache clean
-npm cache clean --force
+yarn cache clean 2>/dev/null || true
+npm cache clean --force 2>/dev/null || true
 command -v uv >/dev/null 2>&1 && uv cache clean 2>/dev/null || true
 rm -rf ~/Library/Caches/ms-playwright 2>/dev/null || true
 

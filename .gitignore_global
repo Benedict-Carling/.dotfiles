@@ -1,0 +1,32 @@
+# macOS system files
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon?
+._*
+.Spotlight-V100
+.Trashes
+
+# Windows & Linux thumbnails
+Thumbs.db
+ehthumbs.db
+
+# Secrets & Environment Overrides
+.env.local
+.env.*.local
+*.pem
+*.key
+
+# Editor / IDE configuration
+.idea/
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+*.swp
+*.swo
+*~
+
+# Patch and merge leftovers
+*.orig
+*.rej

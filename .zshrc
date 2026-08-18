@@ -14,30 +14,10 @@ setopt HIST_SAVE_NO_DUPS         # Don't write duplicate entries to the history 
 setopt HIST_REDUCE_BLANKS        # Remove superfluous blanks before recording
 setopt SHARE_HISTORY             # Share history across all active terminal sessions
 
-# GPG signing
-export GPG_TTY=$(tty)
-
 # Add Homebrew to path
 if [ -f /opt/homebrew/bin/brew ]; then
   eval "$(/opt/homebrew/bin/brew shellenv)"
 fi
-
-# NVM Setup (Lazy loaded for fast shell startup)
-export NVM_DIR="$HOME/.dotfiles/nvm"
-if [ -d "$NVM_DIR/versions/node" ]; then
-  local _nvm_default_ver
-  _nvm_default_ver=$(cat "$NVM_DIR/alias/default" 2>/dev/null || echo "")
-  if [ -n "$_nvm_default_ver" ] && [ -d "$NVM_DIR/versions/node/v$_nvm_default_ver/bin" ]; then
-    export PATH="$NVM_DIR/versions/node/v$_nvm_default_ver/bin:$PATH"
-  fi
-fi
-
-_load_nvm() {
-  unset -f nvm node npm npx yarn pnpm 2>/dev/null
-  [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-  [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
-}
-nvm() { _load_nvm; nvm "$@"; }
 
 # Zsh Completion & Antidote Plugin Manager
 export ZSH_COMPDUMP="${HOME}/.cache/.zcompdump-${ZSH_VERSION}"
@@ -67,6 +47,11 @@ if command -v starship >/dev/null 2>&1; then
   eval "$(starship init zsh)"
 fi
 
+# FNM (Fast Node Manager - automatic version switching on cd)
+if command -v fnm >/dev/null 2>&1; then
+  eval "$(fnm env --use-on-cd --shell zsh)"
+fi
+
 # Zoxide (Smart directory jumping)
 if command -v zoxide >/dev/null 2>&1; then
   eval "$(zoxide init zsh)"
@@ -76,40 +61,6 @@ fi
 if command -v fzf >/dev/null 2>&1; then
   source <(fzf --zsh)
 fi
-
-# Auto switch Node version when .nvmrc is found
-autoload -U add-zsh-hook
-load-nvmrc() {
-  local dir="$PWD"
-  local nvmrc_path=""
-  while [[ "$dir" != "" && "$dir" != "/" ]]; do
-    if [[ -f "$dir/.nvmrc" ]]; then
-      nvmrc_path="$dir/.nvmrc"
-      break
-    fi
-    dir="${dir:h}"
-  done
-
-  if [ -n "$nvmrc_path" ]; then
-    _load_nvm
-    local nvmrc_node_version
-    nvmrc_node_version=$(nvm version "$(cat "${nvmrc_path}")")
-
-    if [ "$nvmrc_node_version" = "N/A" ]; then
-      nvm install
-    elif [ "$nvmrc_node_version" != "$(nvm version)" ]; then
-      nvm use
-    fi
-  elif [ -z "$(typeset -f _load_nvm)" ] && typeset -f nvm >/dev/null; then
-    # Only check if nvm is fully loaded and not the stub
-    if [ "$(nvm version 2>/dev/null)" != "$(nvm version default 2>/dev/null)" ]; then
-      echo "Reverting to nvm default version"
-      nvm use default
-    fi
-  fi
-}
-add-zsh-hook chpwd load-nvmrc
-load-nvmrc
 
 # Custom tokens
 if [ -f ~/.dotfiles/.tokens.zsh ]; then

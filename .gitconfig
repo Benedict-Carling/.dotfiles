@@ -1,30 +1,52 @@
 [user]
 	name = Benedict Carling
 	email = 53439684+Benedict-Carling@users.noreply.github.com
+	signingkey = ~/.ssh/id_ed25519.pub
 [core]
 	editor = code --wait
+	excludesFile = ~/.dotfiles/.gitignore_global
+	pager = delta
+[interactive]
+	diffFilter = delta --color-only
+[delta]
+	navigate = true
+	light = false
+	side-by-side = false
+	line-numbers = true
 [credential]
 	helper = osxkeychain
+[gpg]
+	format = ssh
+[gpg "ssh"]
+	allowedSignersFile = ~/.dotfiles/.allowed_signers
 [commit]
 	gpgsign = true
-[alias]
-	lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%ar) %C(bold blue)<%an>%Creset' --abbrev-commit
-[gpg]
-	program = gpg
-[include]
-	path = ~/.dotfiles/.signingkey.gitconfig
+[init]
+	defaultBranch = main
+[fetch]
+	prune = true
+	pruneTags = true
+[rebase]
+	autoStash = true
+[rerere]
+	enabled = true
+[merge]
+	conflictstyle = zdiff3
+[diff]
+	colorMoved = default
 [pull]
 	rebase = false
 [push]
 	followTags = true
-[filter "lfs"]
-	clean = git-lfs clean -- %f
-	smudge = git-lfs smudge -- %f
-	process = git-lfs filter-process
-	required = true
-[push]
 	autoSetupRemote = true
 [branch]
 	sort = committerdate
 [column]
 	ui = always
+[alias]
+	lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%ar) %C(bold blue)<%an>%Creset' --abbrev-commit
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true

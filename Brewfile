@@ -6,6 +6,8 @@ brew "starship"
 brew "antidote"
 # Python package and project manager (replaces pyenv, pip, pipx, poetry)
 brew "uv"
+# Fast Node Version Manager (Rust-based, replaces nvm)
+brew "fnm"
 
 # Modern CLI Productivity Tools
 brew "bat"          # Cat clone with syntax highlighting
@@ -33,10 +35,6 @@ brew "mas"          # Mac App Store CLI
 brew "java"         # Java runtime
 brew "zlib"
 
-# Security & GPG
-brew "gnupg"
-brew "pinentry-mac"
-
 # Applications (Casks)
 cask "google-chrome"
 cask "visual-studio-code"
@@ -53,4 +51,3 @@ cask "docker"
 cask "ngrok"
 cask "pgadmin4"
 cask "blackhole-2ch"
-cask "balenaetcher"
