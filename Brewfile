@@ -1,6 +1,6 @@
 tap "homebrew/bundle"
-# Good for updating casks
-tap "buo/cask-upgrade"
+# Cross-shell prompt
+brew "starship"
 # print contents of files
 brew "bat"
 # aws cli
@@ -29,8 +29,6 @@ brew "readline"
 brew "sqlite3"
 # Needed to build python
 brew "xz"
-# Needed to build python
-brew "zlib"
 # cmake
 brew "cmake"
 # Mac App store CLI
@@ -39,16 +37,16 @@ brew "mas"
 brew "croc"
 # Image handling
 brew "ffmpeg"
+# Virtual audio driver for routing audio between applications
+cask "blackhole-2ch"
 # pulumi
 brew "pulumi"
 # Java runtime
 brew "java"
-# Unknown but needed
+# JSON processor
 brew "jq"
 # Install github-cli
 brew "gh"
-# Utility to programmatically access the clipboard
-brew "xclip"
 # Investigate disk usage
 brew "ncdu"
 # # Used to search and push to balena devices, ignored deps because it has a dependecy on node
@@ -63,14 +61,8 @@ cask "google-chrome"
 cask "ngrok"
 # App to write, plan, collaborate, and get organized
 cask "notion"
-# Team communication and collaboration software
-cask "slack"
 # Music streaming service
 cask "spotify"
-# Postman
-cask "postman"
-# Git GUI client
-cask "gitkraken"
 # Open-source code editor
 cask "visual-studio-code"
 # Desktop client for GitHub repositories
@@ -79,8 +71,6 @@ cask "github"
 cask "raycast"
 # Messaging Platform
 cask "whatsapp"
-# Password Manager
-cask "1password"
 # Ticketing Platform
 cask "linear-linear"
 # Video Conferencing
@@ -89,12 +79,8 @@ cask "zoom"
 cask "docker"
 # etcher
 cask "balenaetcher"
-# gather
-cask "gather"
 # Claude Desktop AI assistant
 cask "claude"
-# tool to access databases
-cask "tailscale"
 # Inspect databases
 cask "pgadmin4"
 # Flash card program

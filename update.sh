@@ -12,9 +12,9 @@ echo "Updating Homebrew..."
 brew update
 brew upgrade
 
-# Update casks using buo/cask-upgrade
+# Update casks with greedy upgrades (checks auto-updating apps)
 echo "Updating Homebrew casks..."
-brew cu --all -y
+brew upgrade --cask --greedy
 
 # Clean up Homebrew
 echo "Cleaning up Homebrew..."
@@ -26,6 +26,9 @@ brew doctor
 echo "🗑️  Clearing caches..."
 nvm cache clear
 yarn cache clean
+npm cache clean --force
+pip cache purge 2>/dev/null || true
+rm -rf ~/Library/Caches/ms-playwright 2>/dev/null || true
 
 # Rehash pyenv
 echo "🐍 Rehashing pyenv..."

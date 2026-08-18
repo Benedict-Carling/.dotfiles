@@ -1,0 +1,115 @@
+# Starship Prompt Configuration
+# Replicates the minimalist Pure / Powerlevel10k aesthetic
+
+# Left prompt: User/Host (if SSH/root) -> Directory -> Git (branch/commit/state/status) -> Execution Time -> Python -> Node.js -> Prompt Symbol
+format = """$username$hostname$directory$git_branch$git_commit$git_state$git_status$cmd_duration$python$nodejs$character"""
+
+# Right prompt: Time
+right_format = """$time"""
+
+# Single-line compact prompt
+add_newline = false
+
+# Character (Prompt Symbol): Magenta ❯ for success, Red ❯ on error, ❮ in vi-command mode
+[character]
+success_symbol = "[❯](bold magenta)"
+error_symbol = "[❯](bold red)"
+vimcmd_symbol = "[❮](bold magenta)"
+vimcmd_replace_one_symbol = "[❮](bold yellow)"
+vimcmd_replace_symbol = "[❮](bold yellow)"
+vimcmd_visual_symbol = "[❮](bold cyan)"
+
+# Directory: Bold blue
+[directory]
+style = "bold blue"
+truncation_length = 3
+truncate_to_repo = false
+format = "[$path]($style) "
+
+# Git Branch: Grey
+[git_branch]
+style = "bright-black"
+symbol = ""
+format = "[$symbol$branch]($style) "
+
+# Git Commit (for detached HEAD state): @<hash> in grey
+[git_commit]
+style = "bright-black"
+commit_hash_length = 8
+tag_disabled = true
+only_detached = true
+format = "[@$hash]($style) "
+
+# Git Status: Asterisk for dirty, cyan arrows for ahead/behind
+[git_status]
+style = "bright-black"
+format = "([$all_status$ahead_behind]($style) )"
+conflicted = "[=](red)"
+ahead = "[⇡](cyan)"
+behind = "[⇣](cyan)"
+diverged = "[⇣⇡](cyan)"
+untracked = ""
+stashed = ""
+modified = "[*](bright-black)"
+staged = "[*](bright-black)"
+renamed = ""
+deleted = "[*](bright-black)"
+
+# Git State: Progress indicators during rebase, merge, cherry-pick, etc.
+[git_state]
+style = "bright-black"
+format = "([$state($progress_current/$progress_total)]($style) )"
+
+# Command Execution Duration: Yellow, only displayed if command took >= 5 seconds
+[cmd_duration]
+min_time = 5_000
+style = "yellow"
+format = "took [$duration]($style) "
+show_milliseconds = false
+
+# Time: Grey, 24-hour HH:MM:SS format
+[time]
+disabled = false
+style = "bright-black"
+format = "[$time]($style)"
+time_format = "%T"
+
+# Python / Virtualenv / Pyenv: Yellow
+[python]
+style = "yellow"
+symbol = ""
+format = "[$symbol$pyenv_prefix($version )(\\($virtualenv\\) )]($style)"
+
+# Node.js / NVM: Magenta
+[nodejs]
+style = "magenta"
+symbol = ""
+format = "[$symbol($version )]($style)"
+
+# Username / Hostname: Only shown when root or over SSH
+[username]
+style_user = "bright-black"
+style_root = "bold white"
+format = "[$user]($style)"
+show_always = false
+
+[hostname]
+ssh_only = true
+style = "bright-black"
+format = "[@$hostname]($style) "
+
+# Disable noisy default modules to preserve clean Pure look
+[aws]
+disabled = true
+
+[package]
+disabled = true
+
+[docker_context]
+disabled = true
+
+[gcloud]
+disabled = true
+
+[azure]
+disabled = true

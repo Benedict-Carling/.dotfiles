@@ -4,44 +4,42 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Repository Overview
 
-This is a **macOS dotfiles repository** for bootstrapping development environments. The repository uses **git submodules** extensively to manage external dependencies like shell enhancements and version managers.
+This is a **macOS dotfiles repository** for bootstrapping development environments. The repository uses **git submodules** to manage external dependencies like shell enhancements and version managers.
 
-**Key Purpose**: Automate macOS development setup with reproducible configuration for shell, version managers (Node.js/Python), and development tools via Homebrew.
+**Key Purpose**: Automate macOS development setup with reproducible configuration for shell, prompt (Starship), version managers (Node.js/Python), and development tools via Homebrew.
 
 ## Architecture
 
 ### Git Submodules Structure
 
-This repository heavily relies on git submodules for external dependencies. These are **not custom code** but external tools:
+This repository uses git submodules for external dependencies:
 
 - `nvm/` - Node Version Manager for Node.js version management
 - `pyenv/` - Python version management tool
 - `ohmyzsh/` - Oh My Zsh framework for zsh configuration
-- `powerlevel10k/` - Fast zsh theme with git integration
 - `zsh-autosuggestions/` - Fish-like command suggestions for zsh
 - `zsh-syntax-highlighting/` - Syntax highlighting for zsh commands
 
 ### Core Configuration Files
 
-- **`.zshrc`** - Main shell configuration, sources all submodules and sets up PATH
+- **`.zshrc`** - Main shell configuration, sources submodules, initializes Starship and sets up PATH
 - **`.gitconfig`** - Git global settings with custom aliases and GPG configuration
-- **`.p10k.zsh`** - Powerlevel10k theme configuration
+- **`starship.toml`** - Starship prompt configuration (Pure/minimalist style)
 - **`Brewfile`** - Homebrew package manifest for automated installation
 - **`.signingkey.gitconfig`** - GPG signing key (excluded from git, user-created)
 - **`.tokens.zsh`** - Environment tokens and secrets (excluded from git, optional)
 
 ### Shell Configuration Load Order (`.zshrc`)
 
-1. Poetry and Java added to PATH
-2. NVM initialization from submodule
-3. GPG_TTY export for commit signing
-4. Powerlevel10k instant prompt
-5. Homebrew environment setup
-6. Oh My Zsh initialization with plugins
-7. zsh-autosuggestions and zsh-syntax-highlighting
-8. PYENV initialization
-9. NVM auto-switch on directory change
-10. Custom git aliases and editor settings
+1. Environment PATHs (`$HOME/.local/bin`, `$HOME/bin`, OpenJDK)
+2. GPG_TTY export for commit signing
+3. Homebrew environment setup
+4. NVM initialization with lazy-loading
+5. Oh My Zsh initialization with plugins (`zsh-autosuggestions`, `zsh-syntax-highlighting`)
+6. Starship prompt initialization
+7. Pyenv initialization
+8. NVM auto-switch on directory change (`load-nvmrc`)
+9. Custom git aliases and editor settings
 
 ## Development Commands
 
@@ -51,8 +49,8 @@ This repository heavily relies on git submodules for external dependencies. Thes
 # Install all Homebrew packages from Brewfile
 brew bundle --file ~/.dotfiles/Brewfile
 
-# Update Homebrew casks
-brew cu
+# Update Homebrew and casks
+./update.sh
 
 # Show disk usage (excludes git and node_modules)
 dus

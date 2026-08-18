@@ -1,6 +1,6 @@
 # 🛠 .dotfiles
 
-This repository contains my dotfiles for bootstrapping a new Mac for development. It includes setup for version management using [`nvm`](https://github.com/nvm-sh/nvm) for Node.js and [`pyenv`](https://github.com/pyenv/pyenv) for Python. Feel free to explore, learn and copy parts for your own dotfiles. Enjoy!
+This repository contains my dotfiles for bootstrapping a new Mac for development. It includes setup for version management using [`nvm`](https://github.com/nvm-sh/nvm) for Node.js and [`pyenv`](https://github.com/pyenv/pyenv) for Python, and uses [Starship](https://starship.rs/) for a fast, minimal prompt. Feel free to explore, learn and copy parts for your own dotfiles. Enjoy!
 
 ---
 
@@ -10,9 +10,9 @@ This dotfiles repository is organized as follows:
 
 ### Core Configuration Files
 
-- **`.zshrc`** - Zsh shell configuration with Oh My Zsh and Powerlevel10k theme
+- **`.zshrc`** - Zsh shell configuration with Oh My Zsh and Starship prompt
 - **`.gitconfig`** - Git global configuration
-- **`.p10k.zsh`** - Powerlevel10k theme configuration
+- **`starship.toml`** - Starship prompt configuration
 - **`Brewfile`** - Homebrew package list for automated installation
 
 ### Git Submodules (External Dependencies)
@@ -21,7 +21,6 @@ The repository includes several git submodules for shell enhancements:
 
 - **`nvm/`** - Node Version Manager for Node.js version management
 - **`ohmyzsh/`** - Oh My Zsh framework for zsh configuration
-- **`powerlevel10k/`** - Fast and customizable zsh theme
 - **`pyenv/`** - Python version management
 - **`zsh-autosuggestions/`** - Fish-like autosuggestions for zsh
 - **`zsh-syntax-highlighting/`** - Syntax highlighting for zsh
@@ -40,7 +39,7 @@ This repository is optimized for use with Cursor IDE:
 ### What's Indexed by Cursor
 
 - Core dotfiles (`.zshrc`, `.gitconfig`, etc.)
-- Configuration files (`.p10k.zsh`)
+- Configuration files (`starship.toml`)
 - Package definitions (`Brewfile`)
 - Documentation (`README.md`)
 
@@ -67,7 +66,7 @@ xcode-select --install
 
 ### Step 2: Clone This Repository
 
-You can clone this repository into a new hidden directory using SSH or HTTPS. Make sure you recursivly install the sub modules to avoid only installing the root repository.
+You can clone this repository into a new hidden directory using SSH or HTTPS. Make sure you recursively install the submodules to avoid only installing the root repository.
 
 - **SSH:**
 
@@ -106,7 +105,7 @@ brew bundle --file ~/.dotfiles/Brewfile
 1. Follow [GitHub's guide](https://docs.github.com/en/authentication/managing-commit-signature-verification/generating-a-new-gpg-key) for generating a new GPG key.
 2. Save the signing key in a new file at the root of this repository called `.signingkey.gitconfig`. An example configuration file called [`.example.signingkey.gitconfig`](./.example.signingkey.gitconfig) is provided for your reference.
 3. Add the GPG key to GitHub's recognized GPG keys.
-4. You may need to add the path to pinentry-mac to the ".gpugp/gpg-agent.conf", e.g. pinentry-program /usr/local/bin/pinentry-mac
+4. You may need to add the path to pinentry-mac to the `.gnupg/gpg-agent.conf`, e.g. `pinentry-program /opt/homebrew/bin/pinentry-mac`
 
 ### Step 6: Essential mac settings
 
