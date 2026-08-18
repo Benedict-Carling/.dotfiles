@@ -68,7 +68,7 @@ if [ -f ~/.dotfiles/.tokens.zsh ]; then
 fi
 
 # Git Aliases
-alias gc="cz commit"
+alias gc="git commit"
 alias ga="git add"
 alias gco="git checkout"
 alias gp="git push"

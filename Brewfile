@@ -19,35 +19,28 @@ brew "ripgrep"      # Blazing fast regex search (rg)
 brew "zoxide"       # Smarter cd command that learns your habits
 brew "dust"         # Visual terminal disk usage analyzer
 
-# Development & Version Control
+# Development & Cloud Tools
 brew "git"
+brew "git-lfs"      # Git Large File Storage
 brew "gh"           # GitHub CLI
 brew "zsh"
-brew "commitizen"   # Commit formatting tool
 brew "cmake"
 brew "pulumi"
 brew "awscli"
 brew "jq"           # JSON processor
 brew "wget"         # Internet file retriever
-brew "croc"         # Secure file sending
 brew "ffmpeg"       # Image/video handling
-brew "mas"          # Mac App Store CLI
 brew "java"         # Java runtime
-brew "zlib"
 
 # Applications (Casks)
 cask "google-chrome"
 cask "visual-studio-code"
-cask "github"
 cask "raycast"
-cask "notion"
 cask "spotify"
 cask "whatsapp"
-cask "linear-linear"
 cask "zoom"
 cask "claude"
 cask "anki"
 cask "docker"
 cask "ngrok"
-cask "pgadmin4"
 cask "blackhole-2ch"
