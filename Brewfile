@@ -1,89 +1,56 @@
 tap "homebrew/bundle"
+
 # Cross-shell prompt
 brew "starship"
 # Fast Zsh plugin manager
 brew "antidote"
-# print contents of files
-brew "bat"
-# aws cli
-brew "awscli"
-# Distributed revision control system
+# Python package and project manager (replaces pyenv, pip, pipx, poetry)
+brew "uv"
+
+# Modern CLI Productivity Tools
+brew "bat"          # Cat clone with syntax highlighting
+brew "eza"          # Modern ls replacement with git status & icons
+brew "fd"           # User-friendly, fast find replacement
+brew "fzf"          # Command-line fuzzy finder
+brew "git-delta"    # Syntax-highlighting pager for git
+brew "ripgrep"      # Blazing fast regex search (rg)
+brew "zoxide"       # Smarter cd command that learns your habits
+brew "dust"         # Visual terminal disk usage analyzer
+
+# Development & Version Control
 brew "git"
-# UNIX shell (command interpreter)
+brew "gh"           # GitHub CLI
 brew "zsh"
-# Python code formatter - installed via pipx instead to avoid Homebrew python dependency
-# brew "black"
-# GNU Pretty Good Privacy (PGP) package
-brew "gnupg"
-# Internet file retriever
-brew "wget"
-# General-purpose lossless data-compression library
-brew "zlib"
-# Commit formatting tool
-brew "commitizen"
-# Promt to store GPG key passphrases into keychain
-brew "pinentry-mac"
-# Needed to build python
-brew "openssl"
-# Needed to build python
-brew "readline"
-# Needed to build python
-brew "sqlite3"
-# Needed to build python
-brew "xz"
-# cmake
+brew "commitizen"   # Commit formatting tool
 brew "cmake"
-# Mac App store CLI
-brew "mas"
-# file sending
-brew "croc"
-# Image handling
-brew "ffmpeg"
-# Virtual audio driver for routing audio between applications
-cask "blackhole-2ch"
-# pulumi
 brew "pulumi"
-# Java runtime
-brew "java"
-# JSON processor
-brew "jq"
-# Install github-cli
-brew "gh"
-# Investigate disk usage
-brew "ncdu"
-# # Used to search and push to balena devices, ignored deps because it has a dependecy on node
-# brew "balena-cli", args: ["ignore-dependencies"]
-# # PNPM Dependency
-# brew "corepack", args: ["ignore-dependencies"]
-# # PNPM - faster npm
-# brew "pnpm"
-# To be able to install an openapi version
+brew "awscli"
+brew "jq"           # JSON processor
+brew "wget"         # Internet file retriever
+brew "croc"         # Secure file sending
+brew "ffmpeg"       # Image/video handling
+brew "mas"          # Mac App Store CLI
+brew "java"         # Java runtime
+brew "zlib"
+
+# Security & GPG
+brew "gnupg"
+brew "pinentry-mac"
+
+# Applications (Casks)
 cask "google-chrome"
-# Reverse proxy, secure introspectable tunnels to localhost
-cask "ngrok"
-# App to write, plan, collaborate, and get organized
-cask "notion"
-# Music streaming service
-cask "spotify"
-# Open-source code editor
 cask "visual-studio-code"
-# Desktop client for GitHub repositories
 cask "github"
-# Command pannel
 cask "raycast"
-# Messaging Platform
+cask "notion"
+cask "spotify"
 cask "whatsapp"
-# Ticketing Platform
 cask "linear-linear"
-# Video Conferencing
 cask "zoom"
-# Containerisation
-cask "docker"
-# etcher
-cask "balenaetcher"
-# Claude Desktop AI assistant
 cask "claude"
-# Inspect databases
-cask "pgadmin4"
-# Flash card program
 cask "anki"
+cask "docker"
+cask "ngrok"
+cask "pgadmin4"
+cask "blackhole-2ch"
+cask "balenaetcher"

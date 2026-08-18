@@ -3,7 +3,7 @@ set -e
 
 echo "🔄 Updating dotfiles..."
 
-# Update git submodules (nvm, pyenv)
+# Update git submodules (nvm)
 echo "Updating git submodules..."
 git submodule update --remote --merge
 
@@ -33,11 +33,7 @@ echo "🗑️  Clearing caches..."
 nvm cache clear
 yarn cache clean
 npm cache clean --force
-pip cache purge 2>/dev/null || true
+command -v uv >/dev/null 2>&1 && uv cache clean 2>/dev/null || true
 rm -rf ~/Library/Caches/ms-playwright 2>/dev/null || true
-
-# Rehash pyenv
-echo "🐍 Rehashing pyenv..."
-pyenv rehash
 
 echo "✅ Update complete!"

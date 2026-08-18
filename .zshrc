@@ -1,6 +1,19 @@
 # Environment PATHs
 export PATH="$HOME/.local/bin:$HOME/bin:/opt/homebrew/opt/openjdk/bin:$PATH"
 
+# History Configuration
+HISTFILE="$HOME/.zsh_history"
+HISTSIZE=100000
+SAVEHIST=100000
+setopt EXTENDED_HISTORY          # Record timestamps in history
+setopt HIST_EXPIRE_DUPS_FIRST    # Expire duplicate entries first when trimming history
+setopt HIST_IGNORE_DUPS          # Don't record an entry that was just recorded
+setopt HIST_IGNORE_ALL_DUPS      # Delete old duplicate entry if a new duplicate is added
+setopt HIST_IGNORE_SPACE         # Don't record entries starting with a space (for secrets)
+setopt HIST_SAVE_NO_DUPS         # Don't write duplicate entries to the history file
+setopt HIST_REDUCE_BLANKS        # Remove superfluous blanks before recording
+setopt SHARE_HISTORY             # Share history across all active terminal sessions
+
 # GPG signing
 export GPG_TTY=$(tty)
 
@@ -54,10 +67,15 @@ if command -v starship >/dev/null 2>&1; then
   eval "$(starship init zsh)"
 fi
 
-# Pyenv Setup (optimized with --no-rehash)
-export PYENV_ROOT="$HOME/.dotfiles/pyenv"
-command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init --no-rehash -)"
+# Zoxide (Smart directory jumping)
+if command -v zoxide >/dev/null 2>&1; then
+  eval "$(zoxide init zsh)"
+fi
+
+# FZF (Fuzzy finder keybindings: Ctrl+R for history, Ctrl+T for files)
+if command -v fzf >/dev/null 2>&1; then
+  source <(fzf --zsh)
+fi
 
 # Auto switch Node version when .nvmrc is found
 autoload -U add-zsh-hook
@@ -98,14 +116,28 @@ if [ -f ~/.dotfiles/.tokens.zsh ]; then
     source ~/.dotfiles/.tokens.zsh
 fi
 
-# Aliases
+# Git Aliases
 alias gc="cz commit"
 alias ga="git add"
 alias gco="git checkout"
 alias gp="git push"
 alias gl="git pull --rebase"
 alias glc="git rev-parse HEAD | pbcopy"
-alias dus="ncdu --color dark -rr -x --exclude .git --exclude node_modules"
+
+# Modern CLI Aliases
+if command -v eza >/dev/null 2>&1; then
+  alias ls="eza --icons"
+  alias ll="eza -la --icons --git"
+  alias tree="eza --tree --icons"
+fi
+if command -v bat >/dev/null 2>&1; then
+  alias cat="bat --paging=never"
+fi
+if command -v dust >/dev/null 2>&1; then
+  alias dus="dust -X .git -X node_modules"
+else
+  alias dus="ncdu --color dark -rr -x --exclude .git --exclude node_modules"
+fi
 
 export EDITOR="code --wait --reuse-window"
 export VISUAL="code --wait --reuse-window"

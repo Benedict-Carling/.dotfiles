@@ -1,6 +1,6 @@
 # 🛠 .dotfiles
 
-This repository contains my dotfiles for bootstrapping a new Mac for development. It includes setup for version management using [`nvm`](https://github.com/nvm-sh/nvm) for Node.js and [`pyenv`](https://github.com/pyenv/pyenv) for Python, uses [Starship](https://starship.rs/) for a fast prompt, and uses [Antidote](https://getantidote.github.io/) for static Zsh plugin management.
+This repository contains my dotfiles for bootstrapping a new Mac for development. It includes setup for version management using [`nvm`](https://github.com/nvm-sh/nvm) for Node.js, [`uv`](https://github.com/astral-sh/uv) for fast Python management, [Starship](https://starship.rs/) for a minimal prompt, and [Antidote](https://getantidote.github.io/) for static Zsh plugin bundling.
 
 ---
 
@@ -10,18 +10,17 @@ This dotfiles repository is organized as follows:
 
 ### Core Configuration Files
 
-- **`.zshrc`** - Zsh shell configuration with Antidote plugin bundling and Starship prompt
+- **`.zshrc`** - Zsh shell configuration with history settings, Antidote, Starship, Zoxide, FZF, and modern aliases
 - **`.zsh_plugins.txt`** - Antidote plugin manifest (Git plugins, autosuggestions, syntax highlighting)
 - **`.gitconfig`** - Git global configuration
 - **`starship.toml`** - Starship prompt configuration (Pure/minimalist style)
-- **`Brewfile`** - Homebrew package list for automated installation
+- **`Brewfile`** - Homebrew package list with modern CLI tools (`uv`, `eza`, `fzf`, `zoxide`, `ripgrep`, `fd`, `dust`, `delta`)
 
 ### Git Submodules (External Dependencies)
 
-The repository includes git submodules for language version managers:
+The repository includes a single git submodule for Node version management:
 
 - **`nvm/`** - Node Version Manager for Node.js version management
-- **`pyenv/`** - Python version management
 
 ### Ignore Files
 
@@ -113,12 +112,10 @@ To fix this, go to System Settings > Privacy & Security > App Management and add
 
 ## 📚 Additional Resources
 
-- macOS Defaults - [Website](https://macos-defaults.com/#%F0%9F%99%8B-what-s-a-defaults-command)
+- uv (Python Package & Version Manager) - [GitHub Repo](https://github.com/astral-sh/uv)
 - Antidote Plugin Manager - [GitHub Repo](https://github.com/mattmc3/antidote)
 - Starship Prompt - [Website](https://starship.rs/)
 - `nvm` for Node.js Version Management - [GitHub Repo](https://github.com/nvm-sh/nvm)
-- `pyenv` for Python Version Management - [GitHub Repo](https://github.com/pyenv/pyenv)
-- Bootable USB installer for macOS - [Apple Support Guide](https://support.apple.com/en-us/HT201372)
 - More Dotfiles Inspiration - [Website](https://dotfiles.github.io/)
 
 ---

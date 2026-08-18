@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Repository Overview
 
-This is a **macOS dotfiles repository** for bootstrapping development environments. The repository uses **git submodules** only for language version managers (`nvm`, `pyenv`), **Antidote** for static Zsh plugin bundling, and **Starship** for the prompt.
+This is a **macOS dotfiles repository** for bootstrapping development environments. The repository uses **git submodules** only for `nvm`, **uv** for fast Python management, **Antidote** for static Zsh plugin bundling, and **Starship** for the prompt.
 
 **Key Purpose**: Automate macOS development setup with reproducible configuration for shell, prompt, plugin management, and development tools via Homebrew.
 
@@ -12,16 +12,14 @@ This is a **macOS dotfiles repository** for bootstrapping development environmen
 
 ### Git Submodules Structure
 
-This repository uses git submodules for external language runtime tools:
-
 - `nvm/` - Node Version Manager for Node.js version management
-- `pyenv/` - Python version management tool
 
 Shell plugins (`git`, `zsh-autosuggestions`, `zsh-syntax-highlighting`) are managed statically via **Antidote** from `.zsh_plugins.txt`.
+Python versioning and virtual environments are managed via **uv**.
 
 ### Core Configuration Files
 
-- **`.zshrc`** - Main shell configuration, Antidote bundle loading, Starship prompt initialization, and PATH
+- **`.zshrc`** - Main shell configuration, history settings, Antidote bundle loading, Starship prompt initialization, zoxide, fzf, and PATH
 - **`.zsh_plugins.txt`** - Antidote plugin list
 - **`.gitconfig`** - Git global settings with custom aliases and GPG configuration
 - **`starship.toml`** - Starship prompt configuration (Pure/minimalist style)
@@ -32,14 +30,15 @@ Shell plugins (`git`, `zsh-autosuggestions`, `zsh-syntax-highlighting`) are mana
 ### Shell Configuration Load Order (`.zshrc`)
 
 1. Environment PATHs (`$HOME/.local/bin`, `$HOME/bin`, OpenJDK)
-2. GPG_TTY export for commit signing
-3. Homebrew environment setup
-4. NVM initialization with lazy-loading
-5. Zsh compinit and Antidote plugin bundle sourcing
-6. Starship prompt initialization
-7. Pyenv initialization
-8. NVM auto-switch on directory change (`load-nvmrc`)
-9. Custom git aliases and editor settings
+2. History configuration (shared, timestamped, deduplicated)
+3. GPG_TTY export for commit signing
+4. Homebrew environment setup
+5. NVM initialization with lazy-loading
+6. Zsh compinit and Antidote plugin bundle sourcing
+7. Starship prompt initialization
+8. Zoxide and FZF shell integrations
+9. NVM auto-switch on directory change (`load-nvmrc`)
+10. Custom git aliases, modern CLI aliases (`eza`, `bat`, `dust`), and editor settings
 
 ## Development Commands
 
@@ -67,15 +66,16 @@ dus
 
 ### Version Management
 
+**Python (uv)**:
+- Install Python versions: `uv python install 3.12`
+- Run scripts: `uv run <script.py>`
+- Create virtual environments: `uv venv`
+- Pin directory version: `uv python pin <version>` (writes `.python-version`)
+
 **Node.js (nvm)**:
 - Managed via submodule at `~/.dotfiles/nvm`
 - Auto-switches Node version when `.nvmrc` present in directory
 - Load manually: `nvm use`
-
-**Python (pyenv)**:
-- Managed via submodule at `~/.dotfiles/pyenv`
-- Set version: `pyenv local <version>` or `pyenv global <version>`
-- List versions: `pyenv versions`
 
 ### Git Configuration
 
