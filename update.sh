@@ -3,7 +3,7 @@ set -e
 
 echo "🔄 Updating dotfiles..."
 
-# Update git submodules
+# Update git submodules (nvm, pyenv)
 echo "Updating git submodules..."
 git submodule update --remote --merge
 
@@ -21,6 +21,12 @@ echo "Cleaning up Homebrew..."
 brew cleanup
 brew bundle --force cleanup --file=~/.dotfiles/Brewfile
 brew doctor
+
+# Update antidote plugins
+if [ -f /opt/homebrew/opt/antidote/share/antidote/antidote.zsh ]; then
+  echo "Updating Zsh plugins via Antidote..."
+  zsh -c "source /opt/homebrew/opt/antidote/share/antidote/antidote.zsh && antidote update && antidote bundle < ~/.dotfiles/.zsh_plugins.txt >| ~/.cache/.zsh_plugins.zsh" 2>/dev/null || true
+fi
 
 # Clear caches
 echo "🗑️  Clearing caches..."

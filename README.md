@@ -1,6 +1,6 @@
 # 🛠 .dotfiles
 
-This repository contains my dotfiles for bootstrapping a new Mac for development. It includes setup for version management using [`nvm`](https://github.com/nvm-sh/nvm) for Node.js and [`pyenv`](https://github.com/pyenv/pyenv) for Python, and uses [Starship](https://starship.rs/) for a fast, minimal prompt. Feel free to explore, learn and copy parts for your own dotfiles. Enjoy!
+This repository contains my dotfiles for bootstrapping a new Mac for development. It includes setup for version management using [`nvm`](https://github.com/nvm-sh/nvm) for Node.js and [`pyenv`](https://github.com/pyenv/pyenv) for Python, uses [Starship](https://starship.rs/) for a fast prompt, and uses [Antidote](https://getantidote.github.io/) for static Zsh plugin management.
 
 ---
 
@@ -10,20 +10,18 @@ This dotfiles repository is organized as follows:
 
 ### Core Configuration Files
 
-- **`.zshrc`** - Zsh shell configuration with Oh My Zsh and Starship prompt
+- **`.zshrc`** - Zsh shell configuration with Antidote plugin bundling and Starship prompt
+- **`.zsh_plugins.txt`** - Antidote plugin manifest (Git plugins, autosuggestions, syntax highlighting)
 - **`.gitconfig`** - Git global configuration
-- **`starship.toml`** - Starship prompt configuration
+- **`starship.toml`** - Starship prompt configuration (Pure/minimalist style)
 - **`Brewfile`** - Homebrew package list for automated installation
 
 ### Git Submodules (External Dependencies)
 
-The repository includes several git submodules for shell enhancements:
+The repository includes git submodules for language version managers:
 
 - **`nvm/`** - Node Version Manager for Node.js version management
-- **`ohmyzsh/`** - Oh My Zsh framework for zsh configuration
 - **`pyenv/`** - Python version management
-- **`zsh-autosuggestions/`** - Fish-like autosuggestions for zsh
-- **`zsh-syntax-highlighting/`** - Syntax highlighting for zsh
 
 ### Ignore Files
 
@@ -39,7 +37,7 @@ This repository is optimized for use with Cursor IDE:
 ### What's Indexed by Cursor
 
 - Core dotfiles (`.zshrc`, `.gitconfig`, etc.)
-- Configuration files (`starship.toml`)
+- Configuration files (`starship.toml`, `.zsh_plugins.txt`)
 - Package definitions (`Brewfile`)
 - Documentation (`README.md`)
 
@@ -49,8 +47,6 @@ This repository is optimized for use with Cursor IDE:
 - **Binary files** - Wallpapers, images, and other non-text files
 - **Build outputs** - Generated lock files and caches
 - **Sensitive files** - GPG keys and tokens
-
-This keeps Cursor's index focused on the actual dotfiles configuration while excluding thousands of files from external dependencies that would slow down AI assistance.
 
 ---
 
@@ -118,7 +114,8 @@ To fix this, go to System Settings > Privacy & Security > App Management and add
 ## 📚 Additional Resources
 
 - macOS Defaults - [Website](https://macos-defaults.com/#%F0%9F%99%8B-what-s-a-defaults-command)
-- Dotbot for Automating Symlinks - [GitHub Repo](https://github.com/anishathalye/dotbot)
+- Antidote Plugin Manager - [GitHub Repo](https://github.com/mattmc3/antidote)
+- Starship Prompt - [Website](https://starship.rs/)
 - `nvm` for Node.js Version Management - [GitHub Repo](https://github.com/nvm-sh/nvm)
 - `pyenv` for Python Version Management - [GitHub Repo](https://github.com/pyenv/pyenv)
 - Bootable USB installer for macOS - [Apple Support Guide](https://support.apple.com/en-us/HT201372)

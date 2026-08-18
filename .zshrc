@@ -26,17 +26,27 @@ _load_nvm() {
 }
 nvm() { _load_nvm; nvm "$@"; }
 
-# Oh My Zsh configuration & compdump cache
+# Zsh Completion & Antidote Plugin Manager
 export ZSH_COMPDUMP="${HOME}/.cache/.zcompdump-${ZSH_VERSION}"
-export ZSH="$HOME/.dotfiles/ohmyzsh"
-plugins=(git)
+autoload -Uz compinit
+if [[ -n ${ZDOTDIR:-$HOME}/.cache/.zcompdump(#qN.mh+24) ]]; then
+  compinit -d "$ZSH_COMPDUMP"
+else
+  compinit -C -d "$ZSH_COMPDUMP"
+fi
 
-# Plugins
-source ~/.dotfiles/zsh-autosuggestions/zsh-autosuggestions.zsh
-source ~/.dotfiles/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+_zsh_plugins="$HOME/.dotfiles/.zsh_plugins.txt"
+_zsh_plugins_cache="${XDG_CACHE_HOME:-$HOME/.cache}/.zsh_plugins.zsh"
 
-# Source Oh My Zsh (handles compinit caching automatically)
-source $ZSH/oh-my-zsh.sh
+if [[ ! -f "$_zsh_plugins_cache" || "$_zsh_plugins" -nt "$_zsh_plugins_cache" ]]; then
+  if [ -f /opt/homebrew/opt/antidote/share/antidote/antidote.zsh ]; then
+    source /opt/homebrew/opt/antidote/share/antidote/antidote.zsh
+    [[ -d "${_zsh_plugins_cache:h}" ]] || mkdir -p "${_zsh_plugins_cache:h}"
+    antidote bundle < "$_zsh_plugins" >| "$_zsh_plugins_cache"
+  fi
+fi
+[[ -f "$_zsh_plugins_cache" ]] && source "$_zsh_plugins_cache"
+unset _zsh_plugins _zsh_plugins_cache
 
 # Starship Prompt
 export STARSHIP_CONFIG="$HOME/.dotfiles/starship.toml"

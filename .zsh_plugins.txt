@@ -1,0 +1,9 @@
+# Antidote Zsh Plugins Manifest
+# Git plugin from Oh My Zsh
+ohmyzsh/ohmyzsh path:plugins/git
+
+# Fish-like autosuggestions
+zsh-users/zsh-autosuggestions
+
+# Syntax highlighting (must be loaded last among syntax plugins)
+zsh-users/zsh-syntax-highlighting

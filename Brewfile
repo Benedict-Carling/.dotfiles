@@ -1,6 +1,8 @@
 tap "homebrew/bundle"
 # Cross-shell prompt
 brew "starship"
+# Fast Zsh plugin manager
+brew "antidote"
 # print contents of files
 brew "bat"
 # aws cli

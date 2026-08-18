@@ -4,25 +4,25 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Repository Overview
 
-This is a **macOS dotfiles repository** for bootstrapping development environments. The repository uses **git submodules** to manage external dependencies like shell enhancements and version managers.
+This is a **macOS dotfiles repository** for bootstrapping development environments. The repository uses **git submodules** only for language version managers (`nvm`, `pyenv`), **Antidote** for static Zsh plugin bundling, and **Starship** for the prompt.
 
-**Key Purpose**: Automate macOS development setup with reproducible configuration for shell, prompt (Starship), version managers (Node.js/Python), and development tools via Homebrew.
+**Key Purpose**: Automate macOS development setup with reproducible configuration for shell, prompt, plugin management, and development tools via Homebrew.
 
 ## Architecture
 
 ### Git Submodules Structure
 
-This repository uses git submodules for external dependencies:
+This repository uses git submodules for external language runtime tools:
 
 - `nvm/` - Node Version Manager for Node.js version management
 - `pyenv/` - Python version management tool
-- `ohmyzsh/` - Oh My Zsh framework for zsh configuration
-- `zsh-autosuggestions/` - Fish-like command suggestions for zsh
-- `zsh-syntax-highlighting/` - Syntax highlighting for zsh commands
+
+Shell plugins (`git`, `zsh-autosuggestions`, `zsh-syntax-highlighting`) are managed statically via **Antidote** from `.zsh_plugins.txt`.
 
 ### Core Configuration Files
 
-- **`.zshrc`** - Main shell configuration, sources submodules, initializes Starship and sets up PATH
+- **`.zshrc`** - Main shell configuration, Antidote bundle loading, Starship prompt initialization, and PATH
+- **`.zsh_plugins.txt`** - Antidote plugin list
 - **`.gitconfig`** - Git global settings with custom aliases and GPG configuration
 - **`starship.toml`** - Starship prompt configuration (Pure/minimalist style)
 - **`Brewfile`** - Homebrew package manifest for automated installation
@@ -35,7 +35,7 @@ This repository uses git submodules for external dependencies:
 2. GPG_TTY export for commit signing
 3. Homebrew environment setup
 4. NVM initialization with lazy-loading
-5. Oh My Zsh initialization with plugins (`zsh-autosuggestions`, `zsh-syntax-highlighting`)
+5. Zsh compinit and Antidote plugin bundle sourcing
 6. Starship prompt initialization
 7. Pyenv initialization
 8. NVM auto-switch on directory change (`load-nvmrc`)
@@ -49,7 +49,7 @@ This repository uses git submodules for external dependencies:
 # Install all Homebrew packages from Brewfile
 brew bundle --file ~/.dotfiles/Brewfile
 
-# Update Homebrew and casks
+# Update Homebrew, casks, and Antidote plugins
 ./update.sh
 
 # Show disk usage (excludes git and node_modules)
