@@ -52,6 +52,12 @@ if command -v fnm >/dev/null 2>&1; then
   eval "$(fnm env --use-on-cd --shell zsh)"
 fi
 
+# Cargo (Rust) Setup
+[ -f "$HOME/.cargo/env" ] && . "$HOME/.cargo/env"
+
+# Espup (ESP32 Rust toolchain) Setup
+[ -f "$HOME/export-esp.sh" ] && . "$HOME/export-esp.sh"
+
 # Zoxide (Smart directory jumping)
 if command -v zoxide >/dev/null 2>&1; then
   eval "$(zoxide init zsh)"
