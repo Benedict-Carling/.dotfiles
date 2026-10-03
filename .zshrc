@@ -22,11 +22,13 @@ fi
 # Zsh Completion & Antidote Plugin Manager
 export ZSH_COMPDUMP="${HOME}/.cache/.zcompdump-${ZSH_VERSION}"
 autoload -Uz compinit
-if [[ -n ${ZDOTDIR:-$HOME}/.cache/.zcompdump(#qN.mh+24) ]]; then
-  compinit -d "$ZSH_COMPDUMP"
-else
+_stale_dump=($ZSH_COMPDUMP(N.mh+24))
+if [[ -f $ZSH_COMPDUMP && -z $_stale_dump ]]; then
   compinit -C -d "$ZSH_COMPDUMP"
+else
+  compinit -d "$ZSH_COMPDUMP"
 fi
+unset _stale_dump
 
 _zsh_plugins="$HOME/.dotfiles/.zsh_plugins.txt"
 _zsh_plugins_cache="${XDG_CACHE_HOME:-$HOME/.cache}/.zsh_plugins.zsh"

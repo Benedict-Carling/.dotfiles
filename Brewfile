@@ -1,4 +1,4 @@
-tap "homebrew/bundle"
+tap "stripe/stripe-cli"
 
 # Core Shell & Package / Runtime Managers
 brew "starship"     # Cross-shell prompt
@@ -27,12 +27,20 @@ brew "jq"           # JSON processor
 brew "wget"         # Internet file retriever
 brew "ffmpeg"       # Image/video handling
 brew "java"         # Java runtime
+brew "openjdk@11"
+brew "go"
+brew "goreleaser"
+brew "automake"
+brew "pkgconf"
+brew "texinfo"
+brew "smartmontools" # Disk health (smartctl)
 
 # Embedded & Microcontroller Development (STM32 / ESP32 / RP2040)
 brew "open-ocd"     # On-Chip Debugger for ARM/RISC-V
 brew "stlink"       # ST-Link programmer tools for STM32
 brew "tio"          # Serial terminal for UART debugging
 brew "clang-format" # C/C++ code formatter
+brew "ngspice"      # Circuit simulator
 
 # Cloud, Backend & Database Tools
 brew "awscli"
@@ -44,11 +52,14 @@ brew "supabase"
 brew "cloudflared"
 brew "mongosh"
 brew "libpq"
+brew "nextflow"
+brew "stripe/stripe-cli/stripe"
 
 # Mobile & Swift Development
 brew "cocoapods"
 brew "swiftlint"
 brew "xcodegen"
+brew "libimobiledevice"
 
 # Document & Media Utilities
 brew "imagemagick"
@@ -56,6 +67,8 @@ brew "pandoc"
 brew "tectonic"     # Modern LaTeX engine
 brew "yt-dlp"       # Media downloader CLI
 brew "rclone"       # Cloud storage sync tool
+brew "poppler"      # PDF utilities
+brew "potrace"      # Bitmap to vector tracing
 
 # Applications (Casks)
 cask "google-chrome"
@@ -66,9 +79,11 @@ cask "whatsapp"
 cask "zoom"
 cask "claude"
 cask "anki"
-cask "docker"
+cask "docker-desktop"
 cask "ngrok"
 cask "blackhole-2ch"
 cask "blender"
 cask "orcaslicer"
 cask "mongodb-compass"
+cask "gcloud-cli"
+cask "handy"
