@@ -83,9 +83,9 @@ alias glc="git rev-parse HEAD | pbcopy"
 
 # Modern CLI Aliases
 if command -v eza >/dev/null 2>&1; then
-  alias ls="eza --icons"
-  alias ll="eza -la --icons --git"
-  alias tree="eza --tree --icons"
+  alias ls="eza --icons=auto"
+  alias ll="eza -la --icons=auto --git"
+  alias tree="eza --tree --icons=auto"
 fi
 if command -v bat >/dev/null 2>&1; then
   alias cat="bat --paging=never"
