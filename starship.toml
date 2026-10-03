@@ -74,13 +74,13 @@ style = "bright-black"
 format = "[$time]($style)"
 time_format = "%T"
 
-# Python / Virtualenv / Pyenv: Yellow
+# Python / Virtualenv: Yellow
 [python]
 style = "yellow"
 symbol = ""
-format = "[$symbol$pyenv_prefix($version )(\\($virtualenv\\) )]($style)"
+format = "[$symbol($version )(\\($virtualenv\\) )]($style)"
 
-# Node.js / NVM: Magenta
+# Node.js: Magenta
 [nodejs]
 style = "magenta"
 symbol = ""

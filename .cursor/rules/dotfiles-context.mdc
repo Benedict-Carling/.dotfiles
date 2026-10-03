@@ -1,45 +1,32 @@
 ---
-description: 
-globs: 
+description:
+globs:
 alwaysApply: true
 ---
 # Dotfiles Repository Context
 
-This is a **macOS dotfiles repository** for bootstrapping development environments. Here's what you need to know:
+This is a submodule-free **macOS dotfiles repository** for bootstrapping a development environment. See `CLAUDE.md` for full details.
 
-## Repository Purpose
+## Stack
 
-- **Main Goal**: Automate macOS development setup with version managers, shell configuration, and development tools
-- **Target**: macOS developers who want a reproducible development environment
-- **Key Features**: Version management (Node.js via nvm, Python via pyenv), shell enhancement (Oh My Zsh + Powerlevel10k), and automated package installation (Homebrew)
-
-## Git Submodules Structure
-
-This repository heavily uses **git submodules** for external dependencies:
-
-- `nvm/` - Node Version Manager for Node.js versions
-- `ohmyzsh/` - Oh My Zsh framework for zsh enhancement
-- `powerlevel10k/` - Fast zsh theme with git integration
-- `pyenv/` - Python version management
-- `zsh-autosuggestions/` - Fish-like command suggestions
-- `zsh-syntax-highlighting/` - Syntax highlighting for zsh
+- **Node.js**: `fnm`
+- **Python**: `uv`
+- **Zsh plugins**: `antidote`, statically bundled from `.zsh_plugins.txt`
+- **Prompt**: `starship`, configured in `starship.toml`
+- **Packages**: Homebrew via `Brewfile`; `update.sh` syncs and cleans up against it
+- **Git**: SSH commit signing, `delta` pager
 
 ## Core Configuration Files
 
-- `.zshrc` - Main shell configuration
-- `.gitconfig` - Git global settings
-- `.p10k.zsh` - Powerlevel10k theme configuration
-- `Brewfile` - Homebrew packages for automated installation
+- `.zshrc` - Main shell configuration (symlinked to `~/.zshrc`)
+- `.gitconfig` - Git global settings (symlinked to `~/.gitconfig`)
+- `.gitignore_global` - Global gitignore
+- `.zsh_plugins.txt` - Antidote plugin list
+- `starship.toml` - Prompt configuration
+- `Brewfile` - Homebrew packages
 
-## Cursor IDE Optimization
-
-- **Indexed**: Core dotfiles, configs, documentation
-- **Excluded**: Submodules, binaries, caches (via .cursorignore)
-- **Reason**: Keeps AI assistance fast by focusing on actual configuration rather than external dependencies
-
-## When helping with this repository:
+## When helping with this repository
 
 1. Focus on dotfiles configuration and setup scripts
-2. Understand that submodules are external dependencies, not custom code
-3. Consider macOS-specific requirements and Homebrew integration
-4. Remember this is for development environment automation, not application development
+2. Consider macOS-specific requirements and Homebrew integration
+3. Anything installed outside the Brewfile is removed by `update.sh`, so add new tools to the Brewfile

@@ -30,3 +30,5 @@ ehthumbs.db
 # Patch and merge leftovers
 *.orig
 *.rej
+
+**/.claude/settings.local.json

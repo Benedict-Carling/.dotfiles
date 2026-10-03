@@ -37,7 +37,7 @@ This is a **macOS dotfiles repository** for bootstrapping development environmen
 5. Starship prompt initialization
 6. FNM automatic directory hook (`fnm env --use-on-cd`)
 7. Zoxide and FZF shell integrations
-8. Custom git aliases, modern CLI aliases (`eza`, `bat`, `dust`), and editor settings
+8. `glc` alias, modern CLI aliases (`eza`, `bat`, `dust`), and editor settings
 
 ## Development Commands
 
@@ -47,21 +47,18 @@ This is a **macOS dotfiles repository** for bootstrapping development environmen
 # Install all Homebrew packages from Brewfile
 brew bundle --file ~/.dotfiles/Brewfile
 
-# Update Homebrew, casks, and Antidote plugins
+# Sync Homebrew with Brewfile (install/upgrade/cleanup), update Antidote plugins
 ./update.sh
 
 # Show disk usage (excludes git and node_modules)
 dus
 ```
 
-### Git Aliases (defined in .zshrc)
+### Git Aliases
 
-- `gc` - Commitizen commit (interactive commit message)
-- `ga` - Git add
-- `gco` - Git checkout
-- `gp` - Git push
-- `gl` - Git pull with rebase
-- `glc` - Copy current commit hash to clipboard
+Standard aliases (`gc`, `ga`, `gco`, `gp`, `gl`, ...) come from the Oh My Zsh git plugin loaded via Antidote. `gl` rebases because `pull.rebase = true`.
+
+- `glc` - Copy current commit hash to clipboard (defined in .zshrc)
 
 ### Version Management
 

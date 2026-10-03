@@ -1,10 +1,10 @@
-# 🛠 .dotfiles
+# .dotfiles
 
 This repository contains my dotfiles for bootstrapping a new Mac for development. It is completely submodule-free, featuring [fnm](https://github.com/Schniz/fnm) for Node.js, [`uv`](https://github.com/astral-sh/uv) for Python, [Starship](https://starship.rs/) for a minimal prompt, [Antidote](https://getantidote.github.io/) for static Zsh plugin bundling, and native SSH Git commit signing.
 
 ---
 
-## 📁 Repository Structure
+## Repository Structure
 
 This dotfiles repository is organized as follows:
 
@@ -24,20 +24,8 @@ This dotfiles repository is organized as follows:
 
 ---
 
-## 🎯 Cursor IDE Setup
 
-This repository is optimized for use with Cursor IDE:
-
-### What's Indexed by Cursor
-
-- Core dotfiles (`.zshrc`, `.gitconfig`, `.gitignore_global`, etc.)
-- Configuration files (`starship.toml`, `.zsh_plugins.txt`)
-- Package definitions (`Brewfile`)
-- Documentation (`README.md`)
-
----
-
-## 🚀 Getting Started
+## Getting Started
 
 ### Step 1: Install Apple's Command Line Tools
 
@@ -82,7 +70,7 @@ Commit signing is pre-configured to use your standard SSH key at `~/.ssh/id_ed25
 
 ---
 
-## 📚 Additional Resources
+## Additional Resources
 
 - `fnm` (Fast Node Manager) - [GitHub Repo](https://github.com/Schniz/fnm)
 - `uv` (Python Package & Version Manager) - [GitHub Repo](https://github.com/astral-sh/uv)

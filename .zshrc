@@ -75,12 +75,7 @@ if [ -f ~/.dotfiles/.tokens.zsh ]; then
     source ~/.dotfiles/.tokens.zsh
 fi
 
-# Git Aliases
-alias gc="git commit"
-alias ga="git add"
-alias gco="git checkout"
-alias gp="git push"
-alias gl="git pull --rebase"
+# Git Aliases (gc, ga, gco, gp, gl etc. come from the ohmyzsh git plugin)
 alias glc="git rev-parse HEAD | pbcopy"
 
 # Modern CLI Aliases
@@ -102,8 +97,3 @@ export EDITOR="code --wait --reuse-window"
 export VISUAL="code --wait --reuse-window"
 export CLAUDE_CODE_MAX_OUTPUT_TOKENS=128000
 export STM32CubeMX_PATH=/Applications/STMicroelectronics/STM32CubeMX.app/Contents/Resources
-
-# Conda initialization (fast sourced profile, if installed)
-if [ -f "/opt/homebrew/Caskroom/miniconda/base/etc/profile.d/conda.sh" ]; then
-    . "/opt/homebrew/Caskroom/miniconda/base/etc/profile.d/conda.sh"
-fi

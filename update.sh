@@ -1,34 +1,29 @@
 #!/bin/bash
 set -e
 
-echo "🔄 Updating dotfiles..."
+echo "Updating dotfiles & Homebrew packages..."
 
-# Update Homebrew
+# Update Homebrew indices
 echo "Updating Homebrew..."
 brew update
-brew upgrade
 
-# Update casks with greedy upgrades (checks auto-updating apps)
-echo "Updating Homebrew casks..."
-brew upgrade --cask --greedy
+# Install/upgrade all curated tools from Brewfile
+echo "Syncing packages with Brewfile..."
+brew bundle --file ~/.dotfiles/Brewfile
 
-# Clean up Homebrew
-echo "Cleaning up Homebrew..."
+# Clean up unneeded packages and casks not in Brewfile
+echo "Cleaning up unneeded packages..."
+brew bundle --force cleanup --file ~/.dotfiles/Brewfile
 brew cleanup
-brew bundle --force cleanup --file=~/.dotfiles/Brewfile
-brew doctor
 
-# Update antidote plugins
+# Update Antidote Zsh plugins
 if [ -f /opt/homebrew/opt/antidote/share/antidote/antidote.zsh ]; then
   echo "Updating Zsh plugins via Antidote..."
   zsh -c "source /opt/homebrew/opt/antidote/share/antidote/antidote.zsh && antidote update && antidote bundle < ~/.dotfiles/.zsh_plugins.txt >| ~/.cache/.zsh_plugins.zsh" 2>/dev/null || true
 fi
 
 # Clear caches
-echo "🗑️  Clearing caches..."
-yarn cache clean 2>/dev/null || true
-npm cache clean --force 2>/dev/null || true
-command -v uv >/dev/null 2>&1 && uv cache clean 2>/dev/null || true
-rm -rf ~/Library/Caches/ms-playwright 2>/dev/null || true
+echo "Pruning caches..."
+command -v uv >/dev/null 2>&1 && uv cache prune 2>/dev/null || true
 
-echo "✅ Update complete!"
+echo "Update complete!"

@@ -2,11 +2,7 @@
 .DS_Store
 
 # Sensitive configuration files
-.signingkey.gitconfig
 .tokens.zsh
-
-# Build outputs and generated files
-Brewfile.lock.json
 
 # Wallpapers and media files (these are large binary files)
 *.webp
