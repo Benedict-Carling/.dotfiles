@@ -30,14 +30,15 @@ This is a **macOS dotfiles repository** for bootstrapping development environmen
 
 ### Shell Configuration Load Order (`.zshrc`)
 
-1. Environment PATHs (`$HOME/.local/bin`, `$HOME/bin`, OpenJDK)
+1. Unique PATH/fpath arrays and Homebrew environment (Apple Silicon or Intel)
 2. History configuration (shared, timestamped, deduplicated)
-3. Homebrew environment setup
-4. Zsh compinit and Antidote plugin bundle sourcing
-5. Starship prompt initialization
-6. FNM automatic directory hook (`fnm env --use-on-cd`)
-7. Zoxide and FZF shell integrations
-8. `glc` alias, modern CLI aliases (`eza`, `bat`, `dust`), and editor settings
+3. Completion cache directory, compinit, and completion styles
+4. Atomic Antidote bundle regeneration when the manifest changes
+5. Starship, fnm, Cargo/espup, zoxide, and fzf integrations
+6. Tokens, aliases, and editor settings
+7. Antidote bundle sourcing: Git helper library, Git aliases, autosuggestions, then syntax highlighting
+
+Plugin bundle generation lives in `scripts/bundle-plugins.zsh`; both startup and `update.sh` use it. Failed, empty, or syntactically invalid output must preserve the previous cache and report failure. Use `python3 tests/test_shell.py` for isolated integration checks and `python3 scripts/benchmark-shell.py` to measure initialization (not prompt rendering).
 
 ## Development Commands
 

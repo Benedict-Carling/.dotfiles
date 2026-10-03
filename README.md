@@ -70,6 +70,26 @@ Commit signing is pre-configured to use your standard SSH key at `~/.ssh/id_ed25
 
 ---
 
+## Shell shortcuts and verification
+
+- **Ctrl-R**: search command history.
+- **Ctrl-T**: select files, including hidden files, while respecting `.gitignore` and excluding `.git`. A `bat` preview shows the first 300 lines; **Ctrl-/** toggles it.
+- **Alt-C**: select a directory, also respecting `.gitignore`. On macOS, configure Option as Alt/Meta in your terminal if needed.
+- **Tab**: case-insensitive completion with selectable menus.
+
+Open a new terminal to pick up configuration changes, or run `exec zsh -l`.
+
+The Git plugin explicitly loads its helper library before its aliases. Syntax highlighting loads after fzf and other widget integrations. Plugin bundles are generated into a temporary file and checked before replacing the working cache; failed rebuilds keep the previous bundle and report an error. `update.sh` uses the same bundle writer.
+
+Run the regression checks after Homebrew packages and Antidote plugins have been installed:
+
+```sh
+python3 tests/test_shell.py
+python3 scripts/benchmark-shell.py
+```
+
+The tests use temporary home directories and installed plugins, exclude your tokens and history, and intercept Git pull operations. They check branch-aware aliases, completion caches, path deduplication, fzf filtering/keybindings, and successful/failed plugin rebuilds. The benchmark measures login/interactive shell initialization over 12 runs and reports the median of the last ten; it excludes prompt rendering and typing latency.
+
 ## Additional Resources
 
 - `fnm` (Fast Node Manager) - [GitHub Repo](https://github.com/Schniz/fnm)

@@ -1,5 +1,6 @@
 # Antidote Zsh Plugins Manifest
-# Git plugin from Oh My Zsh
+# Git aliases call helpers such as git_current_branch from lib/git.zsh.
+ohmyzsh/ohmyzsh path:lib/git.zsh
 ohmyzsh/ohmyzsh path:plugins/git
 
 # Fish-like autosuggestions

@@ -1,5 +1,6 @@
 #!/bin/bash
 set -e
+DOTFILES_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
 
 echo "Updating dotfiles & Homebrew packages..."
 
@@ -17,9 +18,12 @@ brew bundle --force cleanup --file ~/.dotfiles/Brewfile
 brew cleanup
 
 # Update Antidote Zsh plugins
-if [ -f /opt/homebrew/opt/antidote/share/antidote/antidote.zsh ]; then
+export HOMEBREW_PREFIX="$(brew --prefix)"
+if [ -f "$HOMEBREW_PREFIX/opt/antidote/share/antidote/antidote.zsh" ]; then
   echo "Updating Zsh plugins via Antidote..."
-  zsh -c "source /opt/homebrew/opt/antidote/share/antidote/antidote.zsh && antidote update && antidote bundle < ~/.dotfiles/.zsh_plugins.txt >| ~/.cache/.zsh_plugins.zsh" 2>/dev/null || true
+  /bin/zsh -fc 'source "$HOMEBREW_PREFIX/opt/antidote/share/antidote/antidote.zsh"; antidote update'
+  /bin/zsh "$DOTFILES_DIR/scripts/bundle-plugins.zsh" \
+    "$DOTFILES_DIR/.zsh_plugins.txt" "${XDG_CACHE_HOME:-$HOME/.cache}/.zsh_plugins.zsh"
 fi
 
 # Clear caches
