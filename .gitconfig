@@ -28,12 +28,14 @@
 	pruneTags = true
 [rebase]
 	autoStash = true
+	updateRefs = true
 [rerere]
 	enabled = true
 [merge]
 	conflictstyle = zdiff3
 [diff]
 	colorMoved = default
+	algorithm = histogram
 [pull]
 	rebase = true
 [push]
@@ -43,6 +45,8 @@
 	sort = committerdate
 [column]
 	ui = auto
+[help]
+	autocorrect = prompt
 [alias]
 	lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%ar) %C(bold blue)<%an>%Creset' --abbrev-commit
 [filter "lfs"]
