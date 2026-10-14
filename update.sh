@@ -1,6 +1,7 @@
 #!/bin/bash
 set -e
 DOTFILES_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+status=0
 
 echo "Updating dotfiles & Homebrew packages..."
 
@@ -10,11 +11,14 @@ brew update
 
 # Install/upgrade all curated tools from Brewfile
 echo "Syncing packages with Brewfile..."
-brew bundle --file ~/.dotfiles/Brewfile
+brew bundle --file "$DOTFILES_DIR/Brewfile" || {
+  echo "Some Brewfile entries failed; continuing with the remaining steps." >&2
+  status=1
+}
 
 # Clean up unneeded packages and casks not in Brewfile
 echo "Cleaning up unneeded packages..."
-brew bundle --force cleanup --file ~/.dotfiles/Brewfile
+brew bundle --force cleanup --file "$DOTFILES_DIR/Brewfile"
 brew cleanup
 
 # Update Antidote Zsh plugins
@@ -30,4 +34,9 @@ fi
 echo "Pruning caches..."
 command -v uv >/dev/null 2>&1 && uv cache prune 2>/dev/null || true
 
-echo "Update complete!"
+if [ "$status" -eq 0 ]; then
+  echo "Update complete!"
+else
+  echo "Update finished with errors; see the Brewfile failures above." >&2
+fi
+exit "$status"
