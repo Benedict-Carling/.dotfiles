@@ -117,7 +117,6 @@ fi
 
 export EDITOR="code --wait --reuse-window"
 export VISUAL="code --wait --reuse-window"
-export CLAUDE_CODE_MAX_OUTPUT_TOKENS=128000
 export STM32CubeMX_PATH=/Applications/STMicroelectronics/STM32CubeMX.app/Contents/Resources
 
 # Starship owns the prompt; only load OMZ's Git helpers, without its async prompt.
