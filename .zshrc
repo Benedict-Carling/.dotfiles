@@ -22,8 +22,6 @@ HISTFILE="$HOME/.zsh_history"
 HISTSIZE=100000
 SAVEHIST=100000
 setopt EXTENDED_HISTORY          # Record timestamps in history
-setopt HIST_EXPIRE_DUPS_FIRST    # Expire duplicate entries first when trimming history
-setopt HIST_IGNORE_DUPS          # Don't record an entry that was just recorded
 setopt HIST_IGNORE_ALL_DUPS      # Delete old duplicate entry if a new duplicate is added
 setopt HIST_IGNORE_SPACE         # Don't record entries starting with a space (for secrets)
 setopt HIST_SAVE_NO_DUPS         # Don't write duplicate entries to the history file
