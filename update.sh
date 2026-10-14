@@ -30,6 +30,16 @@ if [ -f "$HOMEBREW_PREFIX/opt/antidote/share/antidote/antidote.zsh" ]; then
     "$DOTFILES_DIR/.zsh_plugins.txt" "${XDG_CACHE_HOME:-$HOME/.cache}/.zsh_plugins.zsh"
 fi
 
+if command -v uv >/dev/null 2>&1; then
+  echo "Upgrading uv tools..."
+  uv tool upgrade --all || status=1
+fi
+
+if command -v rustup >/dev/null 2>&1; then
+  echo "Updating Rust toolchains..."
+  rustup update || status=1
+fi
+
 # Clear caches
 echo "Pruning caches..."
 command -v uv >/dev/null 2>&1 && uv cache prune 2>/dev/null || true
@@ -37,6 +47,6 @@ command -v uv >/dev/null 2>&1 && uv cache prune 2>/dev/null || true
 if [ "$status" -eq 0 ]; then
   echo "Update complete!"
 else
-  echo "Update finished with errors; see the Brewfile failures above." >&2
+  echo "Update finished with errors; see the failures above." >&2
 fi
 exit "$status"
