@@ -77,7 +77,7 @@ Settings written with `git config --global` go to your personal `~/.gitconfig`, 
 ~/.dotfiles/update.sh
 ```
 
-This updates Homebrew and installs or upgrades everything in the `Brewfile`, then **uninstalls any Homebrew package or cask that is not listed in the `Brewfile`**. Add tools to the `Brewfile` rather than installing them with `brew install` directly. It also updates Antidote plugins, upgrades uv tools and uv-managed Pythons, runs `rustup update`, and runs `espup update` when the ESP32 toolchain is installed. If a step fails, the remaining steps still run and the script exits with an error.
+This updates Homebrew and installs or upgrades everything in the `Brewfile`, then **uninstalls any Homebrew package or cask that is not listed in the `Brewfile`**. Add tools to the `Brewfile` rather than installing them with `brew install` directly. It also checks Brewfile formulae for known vulnerabilities, updates Antidote plugins, upgrades uv tools and uv-managed Pythons, runs `rustup update`, updates espup and its toolchain when the ESP32 toolchain is installed, and updates Google Cloud CLI components. If a step fails, the remaining steps still run and the script exits with an error.
 
 `.zshrc` points `HOMEBREW_BUNDLE_FILE_GLOBAL` at this `Brewfile`, so the `-g` flag works from any directory:
 

@@ -173,14 +173,15 @@ class ShellTests(unittest.TestCase):
         (self.home / ".rustup/toolchains/esp").mkdir(parents=True)
         bin_dir, log = self.stubs(
             brew=f'[[ $1 == --prefix ]] && echo "{env["HOMEBREW_PREFIX"]}" && exit 0; exit 1',
-            uv="exit 1", rustup="exit 1", espup="exit 1")
+            uv="exit 1", rustup="exit 1", espup="exit 1", cargo="exit 1", gcloud="exit 1")
         env["PATH"] = f"{bin_dir}:/usr/bin:/bin"
         result = subprocess.run(["/bin/bash", str(ROOT / "update.sh")], env=env,
                                 capture_output=True, text=True)
         self.assertNotEqual(result.returncode, 0)
         calls = log.read_text()
-        for call in ("brew update", "brew bundle cleanup --force", "uv tool upgrade --all",
-                     "uv python upgrade", "uv cache prune", "rustup update", "espup update"):
+        for call in ("brew update", "brew bundle cleanup --force", "brew vulns --brewfile=",
+                     "uv tool upgrade --all", "uv python upgrade", "uv cache prune", "rustup update",
+                     "cargo install espup --locked", "espup update", "gcloud components update --quiet"):
             self.assertIn(call, calls)
         self.assertIn("Update finished with errors", result.stderr)
 

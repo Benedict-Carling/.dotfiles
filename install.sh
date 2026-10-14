@@ -64,6 +64,9 @@ brew bundle --file "$DOTFILES_DIR/Brewfile" || {
   status=1
 }
 
+echo "Installing the latest Python as the default python and python3..."
+uv python install --default || status=1
+
 echo "Configuring Git identity and signing from GitHub..."
 "$DOTFILES_DIR/scripts/setup-git-identity.sh" || status=1
 

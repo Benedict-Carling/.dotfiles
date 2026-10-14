@@ -20,6 +20,9 @@ brew bundle --file "$DOTFILES_DIR/Brewfile" || {
 echo "Cleaning up unneeded packages..."
 brew bundle cleanup --force --file "$DOTFILES_DIR/Brewfile" || status=1
 
+echo "Checking Brewfile formulae for known vulnerabilities..."
+brew vulns --brewfile="$DOTFILES_DIR/Brewfile" || status=1
+
 # Update Antidote Zsh plugins
 export HOMEBREW_PREFIX="$(brew --prefix)"
 if [ -f "$HOMEBREW_PREFIX/opt/antidote/share/antidote/antidote.zsh" ]; then
@@ -43,8 +46,15 @@ if command -v rustup >/dev/null 2>&1; then
 fi
 
 if command -v espup >/dev/null 2>&1 && [ -d "$HOME/.rustup/toolchains/esp" ]; then
-  echo "Updating ESP32 Rust toolchain..."
+  echo "Updating espup and the ESP32 Rust toolchain..."
+  cargo install espup --locked || status=1
   espup update || status=1
+fi
+
+# The gcloud cask updates itself, so brew bundle does not upgrade it.
+if command -v gcloud >/dev/null 2>&1; then
+  echo "Updating Google Cloud CLI components..."
+  gcloud components update --quiet || status=1
 fi
 
 # Clear caches
