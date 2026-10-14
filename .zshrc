@@ -16,6 +16,7 @@ if [[ -n $HOMEBREW_PREFIX ]]; then
   [[ -d "$HOMEBREW_PREFIX/opt/openjdk@25/bin" ]] && path=("$HOMEBREW_PREFIX/opt/openjdk@25/bin" $path)
 fi
 path=("$HOME/.local/bin" "$HOME/bin" $path)
+export HOMEBREW_BUNDLE_FILE_GLOBAL="$DOTFILES_DIR/Brewfile"
 
 # History Configuration
 HISTFILE="$HOME/.zsh_history"

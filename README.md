@@ -77,6 +77,15 @@ Settings written with `git config --global` go to your personal `~/.gitconfig`, 
 
 This updates Homebrew and installs or upgrades everything in the `Brewfile`, then **uninstalls any Homebrew package or cask that is not listed in the `Brewfile`**. Add tools to the `Brewfile` rather than installing them with `brew install` directly. It also updates Antidote plugins, upgrades uv tools and runs `rustup update`. If a step fails, the remaining steps still run and the script exits with an error.
 
+`.zshrc` points `HOMEBREW_BUNDLE_FILE_GLOBAL` at this `Brewfile`, so the `-g` flag works from any directory:
+
+```zsh
+brew bundle add -g ripgrep        # add a formula to the Brewfile (--cask for apps)
+brew bundle -g                    # install everything listed
+brew bundle remove -g ripgrep     # remove an entry
+brew bundle check -g              # report anything missing
+```
+
 Secrets and API tokens go in `~/.dotfiles/.tokens.zsh`, which is git-ignored and sourced by `.zshrc` when present.
 
 ## Shell shortcuts and verification

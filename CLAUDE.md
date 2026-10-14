@@ -46,7 +46,10 @@ Plugin bundle generation lives in `scripts/bundle-plugins.zsh`; both startup and
 
 ```bash
 # Install all Homebrew packages from Brewfile
-brew bundle --file ~/.dotfiles/Brewfile
+brew bundle -g    # HOMEBREW_BUNDLE_FILE_GLOBAL points at ~/.dotfiles/Brewfile
+
+# Add a package to the Brewfile, then install it
+brew bundle add -g <name> && brew bundle -g
 
 # Bootstrap a new Mac (Homebrew, symlinks, Brewfile); safe to rerun
 ./install.sh
@@ -130,4 +133,4 @@ osascript -e 'tell application "Calendar" to tell calendar "CalendarName" to mak
 - Requires Xcode Command Line Tools
 - Git credential helper uses `osxkeychain`
 - Default editor (shell and Git) set to `code --wait --reuse-window`
-- Anything installed outside the Brewfile is removed by `update.sh`, so add new tools to the Brewfile
+- Anything installed outside the Brewfile is removed by `update.sh`, so add new tools with `brew bundle add -g`
