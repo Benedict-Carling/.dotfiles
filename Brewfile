@@ -20,6 +20,8 @@ brew "dust"         # Visual terminal disk usage analyzer
 brew "git"
 brew "git-lfs"      # Git Large File Storage
 brew "gh"           # GitHub CLI
+brew "gitleaks"     # Secret scanner for git repos
+brew "osv-scanner"  # Dependency vulnerability scanner
 brew "cmake"
 brew "ninja"        # Fast build system
 brew "jq"           # JSON processor
