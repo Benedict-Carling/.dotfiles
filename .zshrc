@@ -100,13 +100,13 @@ fi
 # Git Aliases (gc, ga, gco, gp, gl etc. come from the ohmyzsh git plugin)
 alias glc="git rev-parse HEAD | pbcopy"
 
-# Modern CLI Aliases
+# Modern CLI Aliases (Claude Code sets CLAUDECODE; its shell needs the real ls and cat flags)
 if command -v eza >/dev/null 2>&1; then
-  alias ls="eza --icons=auto"
+  [[ -n $CLAUDECODE ]] || alias ls="eza --icons=auto"
   alias ll="eza -la --icons=auto --git"
   alias tree="eza --tree --icons=auto"
 fi
-if command -v bat >/dev/null 2>&1; then
+if [[ -z $CLAUDECODE ]] && command -v bat >/dev/null 2>&1; then
   alias cat="bat --paging=never"
 fi
 if command -v dust >/dev/null 2>&1; then

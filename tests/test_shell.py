@@ -104,6 +104,11 @@ class ShellTests(unittest.TestCase):
                             $(bindkey '^[c') == *fzf-cd-widget* &&
                             $FZF_CTRL_T_OPTS == *bat* ]]''')
 
+    def test_modern_aliases_skip_claude_code_shell(self):
+        self.check('[[ $aliases[ls] == eza* && $aliases[cat] == bat* && $aliases[tree] == eza* ]]')
+        self.env["CLAUDECODE"] = "1"
+        self.check('(( ! $+aliases[ls] && ! $+aliases[cat] )) && [[ $aliases[tree] == eza* ]]')
+
     def fake_antidote(self, body):
         prefix = self.home / "fake-brew"
         source = prefix / "opt/antidote/share/antidote/antidote.zsh"
