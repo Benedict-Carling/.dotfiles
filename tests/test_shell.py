@@ -142,6 +142,15 @@ class ShellTests(unittest.TestCase):
         self.check('[[ $(CONDA_DEFAULT_ENV=base starship prompt) == *conda:base* ]]')
         self.check('[[ $(CONDA_DEFAULT_ENV=geo starship prompt) == *conda:geo* ]]')
 
+    def test_git_ignore_matches_only_macos_icon_file(self):
+        repo = self.home / "icons"
+        subprocess.run(["/usr/bin/git", "init", "-q", str(repo)], check=True)
+        def ignored(name):
+            return subprocess.run(["/usr/bin/git", "-C", str(repo), "-c",
+                f"core.excludesFile={ROOT / 'git/ignore'}", "check-ignore", "-q", name]).returncode == 0
+        self.assertTrue(ignored("Icon\r"))
+        self.assertFalse(ignored("Icons/a.svg"))
+
     def stubs(self, **scripts):
         bin_dir = self.home / "stub-bin"
         bin_dir.mkdir(exist_ok=True)
@@ -167,6 +176,28 @@ class ShellTests(unittest.TestCase):
                      "uv python upgrade", "uv cache prune", "rustup update", "espup update"):
             self.assertIn(call, calls)
         self.assertIn("Update finished with errors", result.stderr)
+
+    def test_identity_setup_adds_scopes_protocol_and_keys(self):
+        gh = """case "$1 $2" in
+  "auth status") echo "  - Token scopes: 'admin:public_key', 'repo'" ;;
+  "api user") printf 'octocat\\n42\\nThe Octocat\\n' ;;
+esac"""
+        bin_dir, log = self.stubs(gh=gh)
+        env = dict(self.env, PATH=f"{bin_dir}:/usr/bin:/bin")
+        result = subprocess.run(["/bin/bash", str(ROOT / "scripts/setup-git-identity.sh")],
+                                env=env, capture_output=True, text=True)
+        self.assertEqual(result.returncode, 0, result.stderr)
+        calls = log.read_text()
+        for call in ("gh auth refresh --hostname github.com",
+                     "gh config set --host github.com git_protocol ssh",
+                     "--type authentication", "--type signing",
+                     "gh api --paginate users/octocat/ssh_signing_keys"):
+            self.assertIn(call, calls)
+        personal = (self.home / ".gitconfig").read_text()
+        self.assertIn("42+octocat@users.noreply.github.com", personal)
+        self.assertIn("gpgSign = true", personal)
+        pub = (self.home / ".ssh/id_ed25519.pub").read_text().split()[1]
+        self.assertIn(pub, (self.home / ".config/git/allowed_signers").read_text())
 
     def fake_antidote(self, body):
         prefix = self.home / "fake-brew"
