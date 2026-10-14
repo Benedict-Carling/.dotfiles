@@ -10,9 +10,9 @@ scopes="admin:public_key,admin:ssh_signing_key"
 touch "$personal"
 
 if ! gh auth status >/dev/null 2>&1; then
-  gh auth login --web --git-protocol ssh --skip-ssh-key --scopes "$scopes"
+  gh auth login --hostname github.com --web --git-protocol ssh --skip-ssh-key --scopes "$scopes"
 elif ! gh auth status 2>&1 | grep -q "admin:ssh_signing_key"; then
-  gh auth refresh --scopes "$scopes"
+  gh auth refresh --hostname github.com --scopes "$scopes"
 fi
 gh auth setup-git
 
