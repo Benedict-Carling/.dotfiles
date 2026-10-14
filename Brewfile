@@ -53,7 +53,7 @@ brew "cloudflared"
 brew "mongosh"
 brew "libpq"
 brew "nextflow"
-brew "stripe/stripe-cli/stripe"
+brew "stripe/stripe-cli/stripe", trusted: true
 
 # Mobile & Swift Development
 brew "cocoapods"

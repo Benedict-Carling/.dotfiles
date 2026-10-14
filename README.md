@@ -18,7 +18,7 @@ This repository contains my dotfiles for bootstrapping a new Mac for development
 ### Scripts
 
 - **`install.sh`** - Bootstraps a new Mac: installs Homebrew if missing, symlinks the shell and Git configuration, installs the Brewfile, and sets up Git identity and signing from your GitHub account
-- **`update.sh`** - Updates Homebrew packages, Antidote plugins, uv tools and Rust toolchains
+- **`update.sh`** - Updates Homebrew packages, Antidote plugins, uv tools and Pythons, and Rust toolchains
 - **`scripts/setup-git-identity.sh`** - Signs in with `gh`, writes your name, email and signing key to your personal `~/.gitconfig`, and registers the key with GitHub
 - **`scripts/bundle-plugins.zsh`** - Regenerates the Antidote plugin bundle safely
 - **`scripts/benchmark-shell.py`** and **`tests/test_shell.py`** - Shell startup benchmark and integration tests
@@ -77,7 +77,7 @@ Settings written with `git config --global` go to your personal `~/.gitconfig`, 
 ~/.dotfiles/update.sh
 ```
 
-This updates Homebrew and installs or upgrades everything in the `Brewfile`, then **uninstalls any Homebrew package or cask that is not listed in the `Brewfile`**. Add tools to the `Brewfile` rather than installing them with `brew install` directly. It also updates Antidote plugins, upgrades uv tools and runs `rustup update`. If a step fails, the remaining steps still run and the script exits with an error.
+This updates Homebrew and installs or upgrades everything in the `Brewfile`, then **uninstalls any Homebrew package or cask that is not listed in the `Brewfile`**. Add tools to the `Brewfile` rather than installing them with `brew install` directly. It also updates Antidote plugins, upgrades uv tools and uv-managed Pythons, runs `rustup update`, and runs `espup update` when the ESP32 toolchain is installed. If a step fails, the remaining steps still run and the script exits with an error.
 
 `.zshrc` points `HOMEBREW_BUNDLE_FILE_GLOBAL` at this `Brewfile`, so the `-g` flag works from any directory:
 

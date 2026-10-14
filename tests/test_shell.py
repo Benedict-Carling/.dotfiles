@@ -142,6 +142,32 @@ class ShellTests(unittest.TestCase):
         self.check('[[ $(CONDA_DEFAULT_ENV=base starship prompt) == *conda:base* ]]')
         self.check('[[ $(CONDA_DEFAULT_ENV=geo starship prompt) == *conda:geo* ]]')
 
+    def stubs(self, **scripts):
+        bin_dir = self.home / "stub-bin"
+        bin_dir.mkdir(exist_ok=True)
+        log = self.home / "stub.log"
+        for name, body in scripts.items():
+            stub = bin_dir / name
+            stub.write_text(f'#!/bin/bash\necho "{name} $*" >> "{log}"\n{body}\n')
+            stub.chmod(0o755)
+        return bin_dir, log
+
+    def test_update_keeps_going_after_failures(self):
+        env = self.fake_antidote("return 1")
+        (self.home / ".rustup/toolchains/esp").mkdir(parents=True)
+        bin_dir, log = self.stubs(
+            brew=f'[[ $1 == --prefix ]] && echo "{env["HOMEBREW_PREFIX"]}" && exit 0; exit 1',
+            uv="exit 1", rustup="exit 1", espup="exit 1")
+        env["PATH"] = f"{bin_dir}:/usr/bin:/bin"
+        result = subprocess.run(["/bin/bash", str(ROOT / "update.sh")], env=env,
+                                capture_output=True, text=True)
+        self.assertNotEqual(result.returncode, 0)
+        calls = log.read_text()
+        for call in ("brew update", "brew bundle cleanup --force", "uv tool upgrade --all",
+                     "uv python upgrade", "uv cache prune", "rustup update", "espup update"):
+            self.assertIn(call, calls)
+        self.assertIn("Update finished with errors", result.stderr)
+
     def fake_antidote(self, body):
         prefix = self.home / "fake-brew"
         source = prefix / "opt/antidote/share/antidote/antidote.zsh"

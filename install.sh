@@ -43,16 +43,15 @@ link() {
   fi
   if [ -e "$target" ] || [ -L "$target" ]; then
     local backup="$target.backup.$(date +%Y%m%d%H%M%S)"
-    mv "$target" "$backup"
+    mv "$target" "$backup" || return 1
     echo "Moved existing $target to $backup"
   fi
-  mkdir -p "$(dirname "$target")"
-  ln -s "$source" "$target"
+  mkdir -p "$(dirname "$target")" && ln -s "$source" "$target" || return 1
   echo "Linked $target"
 }
-link .zshrc .zshrc
-link git/config .config/git/config
-link git/ignore .config/git/ignore
+link .zshrc .zshrc || status=1
+link git/config .config/git/config || status=1
+link git/ignore .config/git/ignore || status=1
 
 # ~/.gitconfig is now personal; drop the link left by the old layout.
 case "$(readlink "$HOME/.gitconfig")" in
