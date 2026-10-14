@@ -29,6 +29,7 @@ brew "wget"         # Internet file retriever
 brew "ffmpeg"       # Image/video handling
 brew "openjdk@25"   # Java LTS runtime (also required by nextflow)
 brew "go"
+brew "typescript-language-server" # LSP for the Claude Code typescript-lsp plugin
 brew "goreleaser"
 brew "automake"
 brew "pkgconf"
