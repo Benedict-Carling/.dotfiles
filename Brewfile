@@ -90,6 +90,7 @@ cask "bambu-studio"
 cask "freecad"
 cask "kicad"
 cask "gcloud-cli"
+cask "miniconda"
 cask "azure-cli"
 cask "handy"
 

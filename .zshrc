@@ -71,6 +71,16 @@ if command -v fnm >/dev/null 2>&1; then
   eval "$(fnm env --use-on-cd --version-file-strategy=recursive --shell zsh)"
 fi
 
+# Conda (Miniconda); the shell hook is slow, so it loads on first use and never auto-activates base.
+if command -v conda >/dev/null 2>&1; then
+  export CONDA_AUTO_ACTIVATE=false CONDA_CHANGEPS1=false
+  conda() {
+    unfunction conda
+    eval "$(command conda shell.zsh hook)"
+    conda "$@"
+  }
+fi
+
 # Cargo (Rust) Setup
 [ -f "$HOME/.cargo/env" ] && . "$HOME/.cargo/env"
 

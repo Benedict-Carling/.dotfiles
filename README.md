@@ -8,7 +8,7 @@ This repository contains my dotfiles for bootstrapping a new Mac for development
 
 ### Configuration
 
-- **`.zshrc`** - Zsh shell configuration with history settings, Antidote, Starship, fnm, zoxide, fzf, Cargo and modern aliases. It is the only Zsh startup file; there is no `.zshenv` or `.zprofile`.
+- **`.zshrc`** - Zsh shell configuration with history settings, Antidote, Starship, fnm, conda, zoxide, fzf, Cargo and modern aliases. It is the only Zsh startup file; there is no `.zshenv` or `.zprofile`.
 - **`.zsh_plugins.txt`** - Antidote plugin manifest (Git plugins, autosuggestions, syntax highlighting)
 - **`git/config`** - Shared Git settings (Delta pager, SSH signing format, rebase and diff defaults), linked to `~/.config/git/config`
 - **`git/ignore`** - Global gitignore preventing accidental OS, editor and secret commits, linked to `~/.config/git/ignore`
@@ -89,6 +89,18 @@ brew bundle check -g              # report anything missing
 ```
 
 Secrets and API tokens go in `~/.dotfiles/.tokens.zsh`, which is git-ignored and sourced by `.zshrc` when present.
+
+## Conda
+
+Python projects normally use `uv`. For repositories that need conda (for example, ones that ship an `environment.yml`), the Brewfile installs Miniconda:
+
+```zsh
+conda tos accept                        # once, to use Anaconda's default channels
+conda env create -f environment.yml     # in the repository
+conda activate <env-name>
+```
+
+The conda shell hook loads on the first `conda` command, so it adds nothing to shell startup. The base environment is never activated automatically, so conda's Python only appears on `PATH` once you activate an environment. The prompt shows the active environment as `conda:<name>`. To update conda itself, run `conda update -n base conda`.
 
 ## Shell shortcuts and verification
 

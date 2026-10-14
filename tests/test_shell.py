@@ -142,6 +142,13 @@ class ShellTests(unittest.TestCase):
         self.check('[[ $(CONDA_DEFAULT_ENV=base starship prompt) == *conda:base* ]]')
         self.check('[[ $(CONDA_DEFAULT_ENV=geo starship prompt) == *conda:geo* ]]')
 
+    @unittest.skipUnless((BREW / "bin/conda").exists(), "miniconda not installed")
+    def test_conda_loads_on_first_use_without_base(self):
+        self.check('''(( ! $+functions[__conda_activate] )) && [[ -z $CONDA_DEFAULT_ENV ]] || exit 1
+            conda activate base && [[ $CONDA_DEFAULT_ENV == base ]] || exit 1
+            [[ $(whence -p python) == */miniconda/base/bin/python ]] || exit 1
+            conda deactivate && [[ -z $CONDA_DEFAULT_ENV ]]''')
+
     def test_git_ignore_matches_only_macos_icon_file(self):
         repo = self.home / "icons"
         subprocess.run(["/usr/bin/git", "init", "-q", str(repo)], check=True)
