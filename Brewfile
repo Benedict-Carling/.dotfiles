@@ -72,7 +72,6 @@ brew "potrace"      # Bitmap to vector tracing
 
 # Applications (Casks)
 cask "google-chrome"
-cask "ghostty"
 cask "visual-studio-code"
 cask "raycast"
 cask "whatsapp"
