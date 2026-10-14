@@ -19,6 +19,8 @@ trap 'exit 1' INT TERM
 if antidote bundle < "$manifest" > "$temporary" &&
    [[ -s "$temporary" ]] && /bin/zsh -n "$temporary"; then
   mv -f -- "$temporary" "$cache"
+  marker=${ANTIDOTE_HOME:-$HOME/Library/Caches/antidote}/.antidote.load
+  mkdir -p -- "${marker:h}" && touch -- "$marker"
 else
   print -u2 -- 'Could not generate a valid plugin bundle.'
   exit 1

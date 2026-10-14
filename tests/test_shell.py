@@ -23,11 +23,11 @@ class ShellTests(unittest.TestCase):
         for name in (".zshrc", ".zsh_plugins.txt", "starship.toml"):
             shutil.copy2(ROOT / name, self.repo / name)
         shutil.copytree(ROOT / "scripts", self.repo / "scripts")
-        # Reuse installed plugins read-only; never read the user's secrets/history.
-        self.plugins = REAL_HOME / "Library/Caches/antidote"
-        target = self.home / "Library/Caches/antidote"
-        target.parent.mkdir(parents=True)
-        target.symlink_to(self.plugins)
+        # Reuse installed plugin clones read-only; never read the user's secrets/history.
+        self.plugins = self.home / "Library/Caches/antidote"
+        self.plugins.mkdir(parents=True)
+        (self.plugins / "github.com").symlink_to(REAL_HOME / "Library/Caches/antidote/github.com")
+        (self.plugins / ".antidote.load").touch()
         self.cache = self.home / "cache"
         self.cache.mkdir()
         self.env = dict(HOME=str(self.home), XDG_CACHE_HOME=str(self.cache),
@@ -72,6 +72,30 @@ class ShellTests(unittest.TestCase):
     def test_cold_completion_cache(self):
         self.check('[[ -s "$ZSH_COMPDUMP" ]] && (( $+functions[compdef] ))')
 
+    def test_stale_completion_dump_is_refreshed(self):
+        self.check('true')
+        dump = next(self.cache.glob(".zcompdump-*"))
+        os.utime(dump, (1, 1))
+        self.check('true')
+        self.assertGreater(dump.stat().st_mtime, 1)
+
+    def test_missing_plugin_marker_forces_rebuild(self):
+        cache = self.cache / ".zsh_plugins.zsh"
+        cache.write_text("# stale bundle without plugins\n")
+        (self.plugins / ".antidote.load").unlink()
+        self.check('[[ $(git_current_branch) == $(command git symbolic-ref --short HEAD) ]]')
+        self.assertTrue((self.plugins / ".antidote.load").exists())
+        self.assertIn("ohmyzsh", cache.read_text())
+
+    def test_esp_export_requires_toolchain(self):
+        (self.home / "export-esp.sh").write_text("export ESP_TEST=1\n")
+        self.check('[[ -z $ESP_TEST ]]')
+        (self.home / ".rustup/toolchains/esp").mkdir(parents=True)
+        self.check('[[ $ESP_TEST == 1 ]]')
+
+    def test_fnm_searches_parent_directories(self):
+        self.check('[[ $FNM_VERSION_FILE_STRATEGY == recursive ]]')
+
     def test_startup_is_quiet(self):
         result = self.shell('true')
         self.assertEqual((result.returncode, result.stdout, result.stderr), (0, "", ""))
@@ -96,6 +120,10 @@ class ShellTests(unittest.TestCase):
                $files != *"ignored.txt"* && $files != *".git/"* ]] || exit 1
             [[ $(print -r -- "$files" | fzf --filter='keep file') == 'keep file.txt' ]] || exit 1
             [[ $(eval "$FZF_ALT_C_COMMAND") == 'directory with spaces/' ]] || exit 1
+            paths=$(_fzf_compgen_path .)
+            [[ $paths == *"keep file.txt"* && $paths == *".hidden"* &&
+               $paths != *"ignored.txt"* && $paths != *".git/"* ]] || exit 1
+            [[ $(_fzf_compgen_dir .) == './directory with spaces/' ]] || exit 1
             bat --color=always --style=numbers --line-range=:300 -- 'keep file.txt' >/dev/null''')
 
     def test_fzf_widgets_and_preview(self):

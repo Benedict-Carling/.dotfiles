@@ -95,7 +95,7 @@ Secrets and API tokens go in `~/.dotfiles/.tokens.zsh`, which is git-ignored and
 - **Ctrl-R**: search command history.
 - **Ctrl-T**: select files, including hidden files, while respecting `.gitignore` and excluding `.git`. A `bat` preview shows the first 300 lines; **Ctrl-/** toggles it.
 - **Alt-C**: select a directory, also respecting `.gitignore`. On macOS, configure Option as Alt/Meta in your terminal if needed.
-- **Tab**: case-insensitive completion with selectable menus.
+- **Tab**: case-insensitive completion with selectable menus. `**<Tab>` opens fzf for paths, also respecting `.gitignore`.
 
 Open a new terminal to pick up configuration changes, or run `exec zsh -l`.
 

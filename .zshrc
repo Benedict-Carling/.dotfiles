@@ -32,23 +32,27 @@ setopt SHARE_HISTORY             # Share history across all active terminal sess
 # Zsh Completion & Antidote Plugin Manager
 export ZSH_COMPDUMP="${XDG_CACHE_HOME:-$HOME/.cache}/.zcompdump-${ZSH_VERSION}"
 mkdir -p -- "${ZSH_COMPDUMP:h}"
+zmodload zsh/complist
 autoload -Uz compinit
 _stale_dump=($ZSH_COMPDUMP(N.mh+24))
 if [[ -f $ZSH_COMPDUMP && -z $_stale_dump ]]; then
   compinit -C -d "$ZSH_COMPDUMP"
 else
   compinit -i -d "$ZSH_COMPDUMP"
+  # compinit only rewrites the dump when completions change; refresh it so -C is used again.
+  touch "$ZSH_COMPDUMP"
 fi
 unset _stale_dump
 
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
 zstyle ':completion:*' menu select
-zmodload zsh/complist
 
 _zsh_plugins="$DOTFILES_DIR/.zsh_plugins.txt"
 _zsh_plugins_cache="${XDG_CACHE_HOME:-$HOME/.cache}/.zsh_plugins.zsh"
 
-if [[ ! -f "$_zsh_plugins_cache" || "$_zsh_plugins" -nt "$_zsh_plugins_cache" ]]; then
+# The marker disappears with the plugin clones, which forces a rebuild (as antidote load does).
+if [[ ! -f "$_zsh_plugins_cache" || "$_zsh_plugins" -nt "$_zsh_plugins_cache" ||
+      ! -e "${ANTIDOTE_HOME:-$HOME/Library/Caches/antidote}/.antidote.load" ]]; then
   if [[ -f "$HOMEBREW_PREFIX/opt/antidote/share/antidote/antidote.zsh" ]]; then
     /bin/zsh "$DOTFILES_DIR/scripts/bundle-plugins.zsh" "$_zsh_plugins" "$_zsh_plugins_cache" ||
       print -u2 -- 'Plugin rebuild failed; retaining the previous bundle.'
@@ -64,14 +68,14 @@ fi
 
 # FNM (Fast Node Manager - automatic version switching on cd)
 if command -v fnm >/dev/null 2>&1; then
-  eval "$(fnm env --use-on-cd --shell zsh)"
+  eval "$(fnm env --use-on-cd --version-file-strategy=recursive --shell zsh)"
 fi
 
 # Cargo (Rust) Setup
 [ -f "$HOME/.cargo/env" ] && . "$HOME/.cargo/env"
 
-# Espup (ESP32 Rust toolchain) Setup
-[ -f "$HOME/export-esp.sh" ] && . "$HOME/export-esp.sh"
+# Espup (ESP32 Rust toolchain) Setup; the export file outlives an uninstalled toolchain.
+[[ -f "$HOME/export-esp.sh" && -d "$HOME/.rustup/toolchains/esp" ]] && . "$HOME/export-esp.sh"
 
 # Zoxide (Smart directory jumping)
 if command -v zoxide >/dev/null 2>&1; then
@@ -84,6 +88,8 @@ if command -v fzf >/dev/null 2>&1; then
     export FZF_DEFAULT_COMMAND='fd --type f --hidden --strip-cwd-prefix --exclude .git'
     export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
     export FZF_ALT_C_COMMAND='fd --type d --hidden --strip-cwd-prefix --exclude .git'
+    _fzf_compgen_path() { fd --hidden --exclude .git . "$1"; }
+    _fzf_compgen_dir() { fd --type d --hidden --exclude .git . "$1"; }
   fi
   export FZF_DEFAULT_OPTS='--height=60% --layout=reverse --border'
   if command -v bat >/dev/null 2>&1; then
