@@ -7,7 +7,8 @@ export HOMEBREW_NO_AUTO_UPDATE=1 HOMEBREW_NO_ENV_HINTS=1
 # Tools create caches and state on first run; keep those out of HOME so the audit changes nothing.
 scratch=$(mktemp -d)
 trap 'rm -rf "$scratch"' EXIT
-export HOMEBREW_CACHE="$scratch/homebrew" UV_CACHE_DIR="$scratch/uv"
+[ -d "$HOME/Library/Caches/Homebrew" ] || export HOMEBREW_CACHE="$scratch/homebrew"
+[ -d "$HOME/.cache/uv" ] || export UV_CACHE_DIR="$scratch/uv"
 warnings=()
 
 section() { printf '\n== %s\n' "$1"; }
