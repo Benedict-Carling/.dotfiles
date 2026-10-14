@@ -48,7 +48,10 @@ Plugin bundle generation lives in `scripts/bundle-plugins.zsh`; both startup and
 # Install all Homebrew packages from Brewfile
 brew bundle --file ~/.dotfiles/Brewfile
 
-# Sync Homebrew with Brewfile (install/upgrade/cleanup), update Antidote plugins
+# Bootstrap a new Mac (Homebrew, symlinks, Brewfile); safe to rerun
+./install.sh
+
+# Sync Homebrew with Brewfile (install/upgrade/cleanup), update Antidote plugins, uv tools and rustup
 ./update.sh
 
 # Show disk usage (excludes git and node_modules)
@@ -96,7 +99,7 @@ Git configuration includes:
 
 ### Symlink Structure
 
-Configuration files live in `~/.dotfiles/` and are symlinked to home directory:
+Configuration files live in `~/.dotfiles/` (the path is required; `.gitconfig` references it) and `install.sh` symlinks them into the home directory. `.zshrc` is the only Zsh startup file:
 ```bash
 ln -s ~/.dotfiles/.zshrc ~/.zshrc
 ln -s ~/.dotfiles/.gitconfig ~/.gitconfig
@@ -124,4 +127,5 @@ osascript -e 'tell application "Calendar" to tell calendar "CalendarName" to mak
 - Uses Homebrew for package management (`/opt/homebrew` on Apple Silicon)
 - Requires Xcode Command Line Tools
 - Git credential helper uses `osxkeychain`
-- Default editor set to VS Code with `--wait` flag
+- Default editor (shell and Git) set to `code --wait --reuse-window`
+- Anything installed outside the Brewfile is removed by `update.sh`, so add new tools to the Brewfile

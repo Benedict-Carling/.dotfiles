@@ -6,29 +6,34 @@ This repository contains my dotfiles for bootstrapping a new Mac for development
 
 ## Repository Structure
 
-This dotfiles repository is organized as follows:
+### Configuration
 
-### Core Configuration Files
-
-- **`.zshrc`** - Zsh shell configuration with history settings, Antidote, Starship, FNM, Zoxide, FZF, and modern aliases
+- **`.zshrc`** - Zsh shell configuration with history settings, Antidote, Starship, fnm, zoxide, fzf, Cargo and modern aliases. It is the only Zsh startup file; there is no `.zshenv` or `.zprofile`.
 - **`.zsh_plugins.txt`** - Antidote plugin manifest (Git plugins, autosuggestions, syntax highlighting)
 - **`.gitconfig`** - Git global configuration with SSH commit signing and Delta diff pager
-- **`.gitignore_global`** - Global gitignore preventing accidental OS and IDE commits
-- **`starship.toml`** - Starship prompt configuration (Pure/minimalist style)
-- **`Brewfile`** - Homebrew package manifest with modern CLI tools (`uv`, `fnm`, `eza`, `fzf`, `zoxide`, `ripgrep`, `fd`, `dust`, `delta`)
+- **`.allowed_signers`** - SSH public keys trusted for verifying signed commits (one per machine)
+- **`.gitignore_global`** - Global gitignore preventing accidental OS, editor and secret commits
+- **`starship.toml`** - Starship prompt configuration (Pure/minimalist style), loaded via `STARSHIP_CONFIG`
+- **`Brewfile`** - Homebrew formulae, casks and Mac App Store apps
+
+### Scripts
+
+- **`install.sh`** - Bootstraps a new Mac: installs Homebrew if missing, symlinks `.zshrc` and `.gitconfig`, and installs the Brewfile
+- **`update.sh`** - Updates Homebrew packages, Antidote plugins, uv tools and Rust toolchains
+- **`scripts/bundle-plugins.zsh`** - Regenerates the Antidote plugin bundle safely
+- **`scripts/benchmark-shell.py`** and **`tests/test_shell.py`** - Shell startup benchmark and integration tests
 
 ### Ignore Files
 
-- **`.gitignore`** - Excludes sensitive files, build outputs, and binary files from git
+- **`.gitignore`** - Keeps `.tokens.zsh`, macOS metadata, media files and temporary files out of this repository
 
 ---
-
 
 ## Getting Started
 
 ### Step 1: Install Apple's Command Line Tools
 
-Command Line Tools are prerequisites for Git and Homebrew. Run the following command to install them:
+Command Line Tools are prerequisites for Git and Homebrew:
 
 ```zsh
 xcode-select --install
@@ -36,38 +41,38 @@ xcode-select --install
 
 ### Step 2: Clone This Repository
 
-Clone this repository into your home directory:
+The configuration expects the repository at `~/.dotfiles`:
 
 ```zsh
 git clone git@github.com:Benedict-Carling/.dotfiles.git ~/.dotfiles
 ```
 
-### Step 3: Create Symbolic Links
-
-Create symlinks in your Home directory to point to the actual files in this repo.
+### Step 3: Run the Installer
 
 ```zsh
-ln -s ~/.dotfiles/.zshrc ~/.zshrc
-ln -s ~/.dotfiles/.gitconfig ~/.gitconfig
+~/.dotfiles/install.sh
 ```
 
-### Step 4: Install Homebrew and Software Packages
+The installer is safe to rerun. Existing `~/.zshrc` or `~/.gitconfig` files are moved aside with a `.backup.<timestamp>` suffix before being linked. Mac App Store entries require being signed in to the App Store.
 
-Run the following commands to install [Homebrew](https://brew.sh/) and the software listed in the `Brewfile`.
+### Step 4: SSH Commit Signing
 
-```zsh
-# Install Homebrew
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+Commit signing uses `~/.ssh/id_ed25519.pub`. Create one with `ssh-keygen -t ed25519` if needed, then:
 
-# Install packages from Brewfile
-brew bundle --file ~/.dotfiles/Brewfile
-```
-
-### Step 5: SSH Commit Signing (Automatic)
-
-Commit signing is pre-configured to use your standard SSH key at `~/.ssh/id_ed25519.pub`. Simply add your SSH signing key to GitHub under **Settings > SSH and GPG keys > New SSH Key** (Select key type: **Signing Key**).
+1. Add it to GitHub under **Settings > SSH and GPG keys > New SSH Key** with key type **Signing Key**.
+2. Add a line for it to `.allowed_signers` so `git log --show-signature` can verify commits made on that machine.
 
 ---
+
+## Keeping Up to Date
+
+```zsh
+~/.dotfiles/update.sh
+```
+
+This updates Homebrew and installs or upgrades everything in the `Brewfile`, then **uninstalls any Homebrew package or cask that is not listed in the `Brewfile`**. Add tools to the `Brewfile` rather than installing them with `brew install` directly. It also updates Antidote plugins, upgrades uv tools and runs `rustup update`. If a step fails, the remaining steps still run and the script exits with an error.
+
+Secrets and API tokens go in `~/.dotfiles/.tokens.zsh`, which is git-ignored and sourced by `.zshrc` when present.
 
 ## Shell shortcuts and verification
 
