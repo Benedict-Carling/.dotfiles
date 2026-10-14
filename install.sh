@@ -14,6 +14,17 @@ if ! xcode-select -p >/dev/null 2>&1; then
   exit 1
 fi
 
+sudo_local=/etc/pam.d/sudo_local
+if grep -qE '^auth[[:space:]]+sufficient[[:space:]]+pam_tid\.so' "$sudo_local" 2>/dev/null; then
+  :
+elif [ -e "$sudo_local" ]; then
+  echo "$sudo_local already exists; add 'auth sufficient pam_tid.so' to it to enable Touch ID for sudo." >&2
+elif [ -f "$sudo_local.template" ]; then
+  echo "Enabling Touch ID for sudo (password still works as a fallback)..."
+  sed -E 's/^#(auth[[:space:]]+sufficient[[:space:]]+pam_tid\.so)/\1/' "$sudo_local.template" |
+    sudo tee "$sudo_local" >/dev/null || status=1
+fi
+
 if ! command -v brew >/dev/null 2>&1; then
   echo "Installing Homebrew..."
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"

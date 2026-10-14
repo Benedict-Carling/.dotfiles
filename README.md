@@ -59,6 +59,8 @@ Remove anything from `Brewfile` that you do not want installed, and add your own
 
 The installer is safe to rerun. Existing files at the linked paths are moved aside with a `.backup.<timestamp>` suffix. Mac App Store entries require being signed in to the App Store.
 
+It enables Touch ID for `sudo` using Apple's `/etc/pam.d/sudo_local` template, which survives macOS updates. Your password still works whenever Touch ID is unavailable, for example over SSH or with the lid closed.
+
 It then signs you in to GitHub with `gh` (a browser window opens) and sets up Git for you:
 
 - Your name and private `ID+username@users.noreply.github.com` email come from your GitHub account and are written to `~/.gitconfig`, which is personal and not part of this repository.
