@@ -64,7 +64,7 @@ It enables Touch ID for `sudo` using Apple's `/etc/pam.d/sudo_local` template, w
 It then signs you in to GitHub with `gh` (a browser window opens) and sets up Git for you:
 
 - Your name and private `ID+username@users.noreply.github.com` email come from your GitHub account and are written to `~/.gitconfig`, which is personal and not part of this repository.
-- `~/.ssh/id_ed25519` is created if missing and registered with GitHub for both authentication and commit signing, so your commits show as **Verified**.
+- `~/.ssh/id_ed25519` is created if missing (without a passphrase, so agents and other tools can sign commits non-interactively; FileVault protects it at rest) and registered with GitHub for both authentication and commit signing, so your commits show as **Verified**.
 - `~/.config/git/allowed_signers` is generated from your GitHub signing keys so `git log --show-signature` works locally.
 
 Settings written with `git config --global` go to your personal `~/.gitconfig`, never into this repository.

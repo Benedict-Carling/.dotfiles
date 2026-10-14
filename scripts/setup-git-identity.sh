@@ -24,7 +24,8 @@ email=$(git config --file "$personal" user.email)
 
 if [ ! -f "$key" ]; then
   mkdir -p "$HOME/.ssh"
-  ssh-keygen -t ed25519 -C "$email" -f "${key%.pub}"
+  # No passphrase so agents and other non-interactive tools can sign commits; FileVault protects it at rest.
+  ssh-keygen -q -t ed25519 -N "" -C "$email" -f "${key%.pub}"
 fi
 git config --file "$personal" user.signingKey "$key"
 git config --file "$personal" commit.gpgSign true
