@@ -10,16 +10,16 @@ This repository contains my dotfiles for bootstrapping a new Mac for development
 
 - **`.zshrc`** - Zsh shell configuration with history settings, Antidote, Starship, fnm, zoxide, fzf, Cargo and modern aliases. It is the only Zsh startup file; there is no `.zshenv` or `.zprofile`.
 - **`.zsh_plugins.txt`** - Antidote plugin manifest (Git plugins, autosuggestions, syntax highlighting)
-- **`.gitconfig`** - Git global configuration with SSH commit signing and Delta diff pager
-- **`.allowed_signers`** - SSH public keys trusted for verifying signed commits (one per machine)
-- **`.gitignore_global`** - Global gitignore preventing accidental OS, editor and secret commits
+- **`git/config`** - Shared Git settings (Delta pager, SSH signing format, rebase and diff defaults), linked to `~/.config/git/config`
+- **`git/ignore`** - Global gitignore preventing accidental OS, editor and secret commits, linked to `~/.config/git/ignore`
 - **`starship.toml`** - Starship prompt configuration (Pure/minimalist style), loaded via `STARSHIP_CONFIG`
 - **`Brewfile`** - Homebrew formulae, casks and Mac App Store apps
 
 ### Scripts
 
-- **`install.sh`** - Bootstraps a new Mac: installs Homebrew if missing, symlinks `.zshrc` and `.gitconfig`, and installs the Brewfile
+- **`install.sh`** - Bootstraps a new Mac: installs Homebrew if missing, symlinks the shell and Git configuration, installs the Brewfile, and sets up Git identity and signing from your GitHub account
 - **`update.sh`** - Updates Homebrew packages, Antidote plugins, uv tools and Rust toolchains
+- **`scripts/setup-git-identity.sh`** - Signs in with `gh`, writes your name, email and signing key to your personal `~/.gitconfig`, and registers the key with GitHub
 - **`scripts/bundle-plugins.zsh`** - Regenerates the Antidote plugin bundle safely
 - **`scripts/benchmark-shell.py`** and **`tests/test_shell.py`** - Shell startup benchmark and integration tests
 
@@ -39,28 +39,33 @@ Command Line Tools are prerequisites for Git and Homebrew:
 xcode-select --install
 ```
 
-### Step 2: Clone This Repository
+### Step 2: Fork and Clone
 
-The configuration expects the repository at `~/.dotfiles`:
+Fork this repository on GitHub so you can keep your own changes, then clone your fork to `~/.dotfiles` (the path is required). HTTPS works before any SSH key exists:
 
 ```zsh
-git clone git@github.com:Benedict-Carling/.dotfiles.git ~/.dotfiles
+git clone https://github.com/<your-username>/.dotfiles.git ~/.dotfiles
 ```
 
-### Step 3: Run the Installer
+### Step 3: Trim the Brewfile
+
+Remove anything from `Brewfile` that you do not want installed, and add your own tools. `update.sh` uninstalls Homebrew packages that are not listed, so the Brewfile should describe exactly what you use.
+
+### Step 4: Run the Installer
 
 ```zsh
 ~/.dotfiles/install.sh
 ```
 
-The installer is safe to rerun. Existing `~/.zshrc` or `~/.gitconfig` files are moved aside with a `.backup.<timestamp>` suffix before being linked. Mac App Store entries require being signed in to the App Store.
+The installer is safe to rerun. Existing files at the linked paths are moved aside with a `.backup.<timestamp>` suffix. Mac App Store entries require being signed in to the App Store.
 
-### Step 4: SSH Commit Signing
+It then signs you in to GitHub with `gh` (a browser window opens) and sets up Git for you:
 
-Commit signing uses `~/.ssh/id_ed25519.pub`. Create one with `ssh-keygen -t ed25519` if needed, then:
+- Your name and private `ID+username@users.noreply.github.com` email come from your GitHub account and are written to `~/.gitconfig`, which is personal and not part of this repository.
+- `~/.ssh/id_ed25519` is created if missing and registered with GitHub for both authentication and commit signing, so your commits show as **Verified**.
+- `~/.config/git/allowed_signers` is generated from your GitHub signing keys so `git log --show-signature` works locally.
 
-1. Add it to GitHub under **Settings > SSH and GPG keys > New SSH Key** with key type **Signing Key**.
-2. Add a line for it to `.allowed_signers` so `git log --show-signature` can verify commits made on that machine.
+Settings written with `git config --global` go to your personal `~/.gitconfig`, never into this repository.
 
 ---
 

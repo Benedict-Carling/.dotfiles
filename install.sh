@@ -3,7 +3,7 @@ set -e
 DOTFILES_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
 status=0
 
-# .gitconfig references ~/.dotfiles paths directly.
+# .zshrc and update.sh expect the repository at ~/.dotfiles.
 if [ "$DOTFILES_DIR" != "$HOME/.dotfiles" ]; then
   echo "Clone this repository to ~/.dotfiles before running install.sh." >&2
   exit 1
@@ -26,7 +26,7 @@ if ! command -v brew >/dev/null 2>&1; then
 fi
 
 link() {
-  local source="$DOTFILES_DIR/$1" target="$HOME/$1"
+  local source="$DOTFILES_DIR/$1" target="$HOME/$2"
   if [ "$(readlink "$target")" = "$source" ]; then
     return
   fi
@@ -35,11 +35,18 @@ link() {
     mv "$target" "$backup"
     echo "Moved existing $target to $backup"
   fi
+  mkdir -p "$(dirname "$target")"
   ln -s "$source" "$target"
   echo "Linked $target"
 }
-link .zshrc
-link .gitconfig
+link .zshrc .zshrc
+link git/config .config/git/config
+link git/ignore .config/git/ignore
+
+# ~/.gitconfig is now personal; drop the link left by the old layout.
+case "$(readlink "$HOME/.gitconfig")" in
+  "$DOTFILES_DIR"/*) rm "$HOME/.gitconfig" ;;
+esac
 
 echo "Installing packages from Brewfile..."
 brew bundle --file "$DOTFILES_DIR/Brewfile" || {
@@ -47,10 +54,8 @@ brew bundle --file "$DOTFILES_DIR/Brewfile" || {
   status=1
 }
 
-if [ ! -f "$HOME/.ssh/id_ed25519.pub" ]; then
-  echo "No ~/.ssh/id_ed25519.pub found; commit signing needs it (ssh-keygen -t ed25519)." >&2
-  status=1
-fi
+echo "Configuring Git identity and signing from GitHub..."
+"$DOTFILES_DIR/scripts/setup-git-identity.sh" || status=1
 
 if [ "$status" -eq 0 ]; then
   echo "Install complete! Open a new terminal to load the shell configuration."

@@ -16,14 +16,14 @@ This is a **macOS dotfiles repository** for bootstrapping development environmen
 - **Python**: Managed via `uv` (Astral's fast Python manager)
 - **Zsh Plugins**: Managed statically via `antidote` from `.zsh_plugins.txt`
 - **Prompt**: Managed via `starship` from `starship.toml`
-- **Git Commit Signing**: Native SSH signing via `~/.ssh/id_ed25519.pub`
+- **Git Identity & Signing**: Per-user `~/.gitconfig` generated from the GitHub account by `scripts/setup-git-identity.sh`; SSH signing with `~/.ssh/id_ed25519.pub`
 
 ### Core Configuration Files
 
 - **`.zshrc`** - Main shell configuration, history settings, Antidote bundle loading, Starship prompt initialization, fnm, zoxide, fzf, and PATH
 - **`.zsh_plugins.txt`** - Antidote plugin list
-- **`.gitconfig`** - Git global settings with SSH signing, delta pager, and modern merge/rebase defaults
-- **`.gitignore_global`** - Global gitignore for OS and editor artifacts
+- **`git/config`** - Shared Git settings (delta pager, SSH signing format, merge/rebase/diff defaults), linked to `~/.config/git/config`. Never put identity here.
+- **`git/ignore`** - Global gitignore for OS and editor artifacts, linked to `~/.config/git/ignore`
 - **`starship.toml`** - Starship prompt configuration (Pure/minimalist style)
 - **`Brewfile`** - Homebrew package manifest for automated installation
 - **`.tokens.zsh`** - Environment tokens and secrets (excluded from git, optional)
@@ -79,13 +79,14 @@ Standard aliases (`gc`, `ga`, `gco`, `gp`, `gl`, ...) come from the Oh My Zsh gi
 
 ### Git Configuration
 
-Custom git log alias defined in `.gitconfig`:
+Custom git log alias defined in `git/config`:
 ```bash
 git lg  # Pretty graph log with colors and author info
 ```
 
 Git configuration includes:
-- Native SSH commit signing via `~/.ssh/id_ed25519.pub`
+- `user.useConfigOnly = true`: commits fail until a personal identity exists
+- Native SSH commit signing; key, `commit.gpgSign` and identity live in the untracked personal `~/.gitconfig`, which overrides `git/config`
 - Delta syntax-highlighting pager
 - Auto-setup remote on push
 - Sort branches by commit date
@@ -99,10 +100,11 @@ Git configuration includes:
 
 ### Symlink Structure
 
-Configuration files live in `~/.dotfiles/` (the path is required; `.gitconfig` references it) and `install.sh` symlinks them into the home directory. `.zshrc` is the only Zsh startup file:
+Configuration files live in `~/.dotfiles/` (the path is required) and `install.sh` symlinks them into place. `.zshrc` is the only Zsh startup file. The repository is meant to be forked per person:
 ```bash
 ln -s ~/.dotfiles/.zshrc ~/.zshrc
-ln -s ~/.dotfiles/.gitconfig ~/.gitconfig
+ln -s ~/.dotfiles/git/config ~/.config/git/config
+ln -s ~/.dotfiles/git/ignore ~/.config/git/ignore
 ```
 
 ### Environment-Specific Files

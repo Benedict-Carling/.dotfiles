@@ -1,10 +1,7 @@
 [user]
-	name = Benedict Carling
-	email = 53439684+Benedict-Carling@users.noreply.github.com
-	signingkey = ~/.ssh/id_ed25519.pub
+	useConfigOnly = true
 [core]
 	editor = code --wait --reuse-window
-	excludesFile = ~/.dotfiles/.gitignore_global
 	pager = delta
 [interactive]
 	diffFilter = delta --color-only
@@ -18,9 +15,7 @@
 [gpg]
 	format = ssh
 [gpg "ssh"]
-	allowedSignersFile = ~/.dotfiles/.allowed_signers
-[commit]
-	gpgsign = true
+	allowedSignersFile = ~/.config/git/allowed_signers
 [init]
 	defaultBranch = main
 [fetch]
