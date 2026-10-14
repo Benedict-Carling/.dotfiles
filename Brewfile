@@ -35,6 +35,7 @@ brew "automake"
 brew "pkgconf"
 brew "texinfo"
 brew "smartmontools" # Disk health (smartctl)
+brew "mole"          # Disk cleanup (mo clean, mo purge)
 brew "mas"          # Mac App Store CLI (installs mas entries below)
 
 # Embedded & Microcontroller Development (STM32 / ESP32 / RP2040)

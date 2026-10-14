@@ -207,6 +207,36 @@ esac"""
         pub = (self.home / ".ssh/id_ed25519.pub").read_text().split()[1]
         self.assertIn(pub, (self.home / ".config/git/allowed_signers").read_text())
 
+    def test_audit_reports_old_layout_without_changing_anything(self):
+        home = self.home / "old-mac"
+        repo = home / ".dotfiles"
+        for path in ("nvm/versions/node/v18.20.0/lib/node_modules/pnpm", "pyenv/versions/3.11.9"):
+            (repo / path).mkdir(parents=True)
+        for path in ("Library/Caches", ".cache", ".local"):
+            (home / path).mkdir(parents=True)
+        (repo / ".gitmodules").write_text('[submodule "nvm"]\n')
+        (repo / ".zshrc").write_text('export PATH="/Users/someone-else/.local/bin:$PATH"\n')
+        (repo / ".gitconfig").write_text("[user]\n\tname = Someone Else\n\temail = else@example.com\n")
+        (home / ".zshrc").symlink_to(repo / ".zshrc")
+        (home / ".gitconfig").symlink_to(repo / ".gitconfig")
+        (home / ".zprofile").write_text('eval "$(/usr/local/bin/brew shellenv)"\n')
+        def snapshot():
+            # Tools may create their own caches; settings, dotfiles and installs must stay untouched.
+            caches = (home / "Library/Caches", home / ".cache", home / ".local")
+            return sorted((p, p.lstat().st_mtime) for p in home.rglob("*")
+                          if not any(p == c or c in p.parents for c in caches))
+        before = snapshot()
+        env = dict(HOME=str(home), USER="tester", LOGNAME="tester", PATH="/usr/bin:/bin:/usr/sbin:/sbin",
+                   GIT_CONFIG_NOSYSTEM="1")
+        result = subprocess.run(["/bin/bash", str(ROOT / "scripts/audit.sh")], env=env,
+                                capture_output=True, text=True, timeout=120)
+        self.assertEqual(result.returncode, 0, result.stderr)
+        for expected in ("old submodule layout", "nvm in", "v18.20.0 global npm packages: pnpm",
+                         "pyenv in", "3.11.9", "~/.gitconfig links to", "Someone Else <else@example.com>",
+                         "~/.zprofile sets up tools", "another user's folders: /Users/someone-else/.local/bin"):
+            self.assertIn(expected, result.stdout)
+        self.assertEqual(before, snapshot())
+
     def fake_antidote(self, body):
         prefix = self.home / "fake-brew"
         source = prefix / "opt/antidote/share/antidote/antidote.zsh"

@@ -19,6 +19,7 @@ This repository contains my dotfiles for bootstrapping a new Mac for development
 
 - **`install.sh`** - Bootstraps a new Mac: installs Homebrew if missing, symlinks the shell and Git configuration, installs the Brewfile, and sets up Git identity and signing from your GitHub account
 - **`update.sh`** - Updates Homebrew packages, Antidote plugins, uv tools and Pythons, and Rust toolchains
+- **`scripts/audit.sh`** - Report of what a Mac has installed and what conflicts with these dotfiles
 - **`scripts/setup-git-identity.sh`** - Signs in with `gh`, writes your name, email and signing key to your personal `~/.gitconfig`, and registers the key with GitHub
 - **`scripts/bundle-plugins.zsh`** - Regenerates the Antidote plugin bundle safely
 - **`scripts/benchmark-shell.py`** and **`tests/test_shell.py`** - Shell startup benchmark and integration tests
@@ -30,6 +31,16 @@ This repository contains my dotfiles for bootstrapping a new Mac for development
 ---
 
 ## Getting Started
+
+### Step 0: Audit an Existing Mac
+
+On a Mac that already has development tools, see what conflicts first. The audit changes no settings or installs (tools may refresh their caches) and works before anything else is installed:
+
+```zsh
+curl -fsSL https://raw.githubusercontent.com/Benedict-Carling/.dotfiles/main/scripts/audit.sh | bash | tee ~/mac-audit.txt
+```
+
+It reports Intel Homebrew on Apple Silicon, other Zsh startup files, nvm, pyenv, conda and installer-based Node or Python, global packages to reinstall, an old copy of this repository, the Git identity commits use, and apps that Homebrew casks would collide with. Pass a Brewfile path to also list the Homebrew packages `update.sh` would uninstall.
 
 ### Step 1: Install Apple's Command Line Tools
 
