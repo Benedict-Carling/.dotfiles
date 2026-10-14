@@ -3,6 +3,8 @@
 [core]
 	editor = code --wait --reuse-window
 	pager = delta
+	fsmonitor = true
+	untrackedCache = true
 [interactive]
 	diffFilter = delta --color-only
 [delta]
