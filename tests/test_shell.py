@@ -109,6 +109,11 @@ class ShellTests(unittest.TestCase):
         self.env["CLAUDECODE"] = "1"
         self.check('(( ! $+aliases[ls] && ! $+aliases[cat] )) && [[ $aliases[tree] == eza* ]]')
 
+    def test_prompt_shows_conda_env_including_base(self):
+        self.check('[[ $(starship prompt) != *conda:* ]]')
+        self.check('[[ $(CONDA_DEFAULT_ENV=base starship prompt) == *conda:base* ]]')
+        self.check('[[ $(CONDA_DEFAULT_ENV=geo starship prompt) == *conda:geo* ]]')
+
     def fake_antidote(self, body):
         prefix = self.home / "fake-brew"
         source = prefix / "opt/antidote/share/antidote/antidote.zsh"

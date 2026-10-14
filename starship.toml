@@ -1,8 +1,8 @@
 # Starship Prompt Configuration
 # Replicates the minimalist Pure / Powerlevel10k aesthetic
 
-# Left prompt: User/Host (if SSH/root) -> Directory -> Git (branch/commit/state/status) -> Execution Time -> Python -> Node.js -> Prompt Symbol
-format = """$username$hostname$directory$git_branch$git_commit$git_state$git_status$cmd_duration$python$nodejs$character"""
+# Left prompt: User/Host (if SSH/root) -> Directory -> Git (branch/commit/state/status) -> Execution Time -> Python -> Conda -> Node.js -> Prompt Symbol
+format = """$username$hostname$directory$git_branch$git_commit$git_state$git_status$cmd_duration$python$conda$nodejs$character"""
 
 # Right prompt: Time
 right_format = """$time"""
@@ -79,6 +79,12 @@ time_format = "%T"
 style = "yellow"
 symbol = ""
 format = "[$symbol($version )(\\($virtualenv\\) )]($style)"
+
+# Conda env: Green, including base so a shadowing base Python is visible
+[conda]
+style = "green"
+ignore_base = false
+format = "[conda:$environment ]($style)"
 
 # Node.js: Magenta
 [nodejs]
