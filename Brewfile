@@ -20,7 +20,6 @@ brew "dust"         # Visual terminal disk usage analyzer
 brew "git"
 brew "git-lfs"      # Git Large File Storage
 brew "gh"           # GitHub CLI
-brew "zsh"
 brew "cmake"
 brew "ninja"        # Fast build system
 brew "jq"           # JSON processor
