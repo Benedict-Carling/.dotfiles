@@ -1,4 +1,4 @@
-# CLAUDE.md
+# AGENTS.md
 
 macOS dotfiles, forked per person. Lives at `~/.dotfiles` (the path is required). `install.sh` bootstraps a Mac and is safe to rerun; `update.sh` syncs everything.
 
