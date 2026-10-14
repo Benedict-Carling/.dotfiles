@@ -13,7 +13,7 @@ fi
 if [[ -n $HOMEBREW_PREFIX ]]; then
   path=("$HOMEBREW_PREFIX/bin" "$HOMEBREW_PREFIX/sbin" $path)
   fpath=("$HOMEBREW_PREFIX/share/zsh/site-functions" $fpath)
-  [[ -d "$HOMEBREW_PREFIX/opt/openjdk/bin" ]] && path=("$HOMEBREW_PREFIX/opt/openjdk/bin" $path)
+  [[ -d "$HOMEBREW_PREFIX/opt/openjdk@25/bin" ]] && path=("$HOMEBREW_PREFIX/opt/openjdk@25/bin" $path)
 fi
 path=("$HOME/.local/bin" "$HOME/bin" $path)
 

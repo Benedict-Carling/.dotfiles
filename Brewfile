@@ -26,14 +26,14 @@ brew "ninja"        # Fast build system
 brew "jq"           # JSON processor
 brew "wget"         # Internet file retriever
 brew "ffmpeg"       # Image/video handling
-brew "java"         # Java runtime
-brew "openjdk@11"
+brew "openjdk@25"   # Java LTS runtime (also required by nextflow)
 brew "go"
 brew "goreleaser"
 brew "automake"
 brew "pkgconf"
 brew "texinfo"
 brew "smartmontools" # Disk health (smartctl)
+brew "mas"          # Mac App Store CLI (installs mas entries below)
 
 # Embedded & Microcontroller Development (STM32 / ESP32 / RP2040)
 brew "open-ocd"     # On-Chip Debugger for ARM/RISC-V
@@ -45,9 +45,7 @@ brew "ngspice"      # Circuit simulator
 # Cloud, Backend & Database Tools
 brew "awscli"
 brew "aws-sam-cli"
-brew "azure-cli"
 brew "azcopy"
-brew "pulumi"
 brew "supabase"
 brew "cloudflared"
 brew "mongosh"
@@ -60,6 +58,7 @@ brew "cocoapods"
 brew "swiftlint"
 brew "xcodegen"
 brew "libimobiledevice"
+brew "apkeep"       # Android APK downloader
 
 # Document & Media Utilities
 brew "imagemagick"
@@ -72,18 +71,31 @@ brew "potrace"      # Bitmap to vector tracing
 
 # Applications (Casks)
 cask "google-chrome"
+cask "ghostty"
 cask "visual-studio-code"
 cask "raycast"
-cask "spotify"
 cask "whatsapp"
 cask "zoom"
+cask "microsoft-teams"
+cask "tailscale-app"
 cask "claude"
+cask "chatgpt"
 cask "anki"
 cask "docker-desktop"
-cask "ngrok"
 cask "blackhole-2ch"
 cask "blender"
 cask "orcaslicer"
-cask "mongodb-compass"
+cask "bambu-studio"
+cask "freecad"
+cask "kicad"
 cask "gcloud-cli"
+cask "azure-cli"
 cask "handy"
+
+# Mac App Store
+mas "Xcode", id: 497799835
+mas "TestFlight", id: 899247664
+mas "Pages", id: 409201541
+mas "Keynote", id: 409183694
+mas "Numbers", id: 409203825
+mas "AdBlock Pro", id: 1018301773
