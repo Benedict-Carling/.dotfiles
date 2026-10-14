@@ -119,14 +119,6 @@ osascript -e 'tell application "Calendar" to tell calendar "CalendarName" to mak
 
 **Never use relative time calculations** like `(current date) + (2 * days)` - these cause timezone and timing issues.
 
-## Cursor IDE Rules
-
-This repository uses modern `.mdc` format rules in `.cursor/rules/`:
-
-- **`dotfiles-context.mdc`** - Repository context and structure (always applied)
-- **`icloud-calendar-timing.mdc`** - AppleScript calendar event creation best practices
-- **`mdc-rule-creation.mdc`** - Guidelines for creating new Cursor rules
-
 ## macOS-Specific Notes
 
 - Uses Homebrew for package management (`/opt/homebrew` on Apple Silicon)

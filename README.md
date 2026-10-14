@@ -20,7 +20,6 @@ This dotfiles repository is organized as follows:
 ### Ignore Files
 
 - **`.gitignore`** - Excludes sensitive files, build outputs, and binary files from git
-- **`.cursorignore`** - Excludes caches and binary files from Cursor's index for better performance
 
 ---
 
