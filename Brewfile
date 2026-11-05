@@ -75,7 +75,6 @@ brew "potrace"      # Bitmap to vector tracing
 # Applications (Casks)
 cask "google-chrome"
 cask "visual-studio-code"
-cask "raycast"
 cask "whatsapp"
 cask "zoom"
 cask "microsoft-teams"
@@ -101,4 +100,4 @@ mas "TestFlight", id: 899247664
 mas "Pages", id: 409201541
 mas "Keynote", id: 409183694
 mas "Numbers", id: 409203825
-mas "AdBlock Pro", id: 1018301773
+mas "uBlock Origin Lite", id: 6745342698
