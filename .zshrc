@@ -135,6 +135,9 @@ export EDITOR="code --wait --reuse-window"
 export VISUAL="code --wait --reuse-window"
 export STM32CubeMX_PATH=/Applications/STMicroelectronics/STM32CubeMX.app/Contents/Resources
 
+# Machine-specific settings, such as company proxies and aliases; git-ignored.
+[[ -f "$DOTFILES_DIR/.local.zsh" ]] && source "$DOTFILES_DIR/.local.zsh"
+
 # Starship owns the prompt; only load OMZ's Git helpers, without its async prompt.
 zstyle ':omz:alpha:lib:git' async-prompt no
 [[ -f "$_zsh_plugins_cache" ]] && source "$_zsh_plugins_cache"

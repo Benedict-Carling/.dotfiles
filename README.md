@@ -26,7 +26,7 @@ This repository contains my dotfiles for bootstrapping a new Mac for development
 
 ### Ignore Files
 
-- **`.gitignore`** - Keeps `.tokens.zsh`, macOS metadata, media files and temporary files out of this repository
+- **`.gitignore`** - Keeps `.tokens.zsh`, `.local.zsh`, `Brewfile.local`, macOS metadata, media files and temporary files out of this repository
 
 ---
 
@@ -88,7 +88,7 @@ Settings written with `git config --global` go to your personal `~/.gitconfig`, 
 ~/.dotfiles/update.sh
 ```
 
-This updates Homebrew and installs or upgrades everything in the `Brewfile`, then **uninstalls any Homebrew package or cask that is not listed in the `Brewfile`**. Add tools to the `Brewfile` rather than installing them with `brew install` directly. It also checks Brewfile formulae for known vulnerabilities, updates Antidote plugins, upgrades uv tools and uv-managed Pythons, runs `rustup update`, updates espup and its toolchain when the ESP32 toolchain is installed, and updates Google Cloud CLI components. If a step fails, the remaining steps still run and the script exits with an error.
+This updates Homebrew and installs or upgrades everything in the `Brewfile`, then **uninstalls any Homebrew package or cask that is not listed in the `Brewfile`** (see [Work Machines](#work-machines) to turn this off). Add tools to the `Brewfile` rather than installing them with `brew install` directly. It also checks Brewfile formulae for known vulnerabilities, updates Antidote plugins, upgrades uv tools and uv-managed Pythons, runs `rustup update`, updates espup and its toolchain when the ESP32 toolchain is installed, and updates Google Cloud CLI components. If a step fails, the remaining steps still run and the script exits with an error.
 
 `.zshrc` points `HOMEBREW_BUNDLE_FILE_GLOBAL` at this `Brewfile`, so the `-g` flag works from any directory:
 
@@ -100,6 +100,35 @@ brew bundle check -g              # report anything missing
 ```
 
 Secrets and API tokens go in `~/.dotfiles/.tokens.zsh`, which is git-ignored and sourced by `.zshrc` when present.
+
+## Work Machines
+
+This repository is public, so company details stay in files it ignores. Check your company's policy on personal tools first, and run the audit in Step 0 before installing anything.
+
+- **`.local.zsh`**: machine-specific shell settings such as proxies, internal registries and aliases. `.zshrc` sources it when present.
+- **`Brewfile.local`**: extra Homebrew packages for this machine, in Brewfile syntax. Everything that reads the `Brewfile` includes it, and `update.sh` keeps what it lists.
+- **`DOTFILES_KEEP_UNLISTED_BREW=1`**: export this from `.local.zsh` on a company-managed Mac. `update.sh` then reports packages missing from the `Brewfile` instead of uninstalling them, so tools IT installs survive.
+
+The `Brewfile` can only be added to this way. To leave out personal apps, keep a trimmed `Brewfile` on a separate `work` branch.
+
+To use a separate identity and SSH key for company repositories, keep them under one folder and add this to `~/.gitconfig`:
+
+```ini
+[includeIf "gitdir:~/work/"]
+	path = ~/.config/git/work
+```
+
+Then create `~/.config/git/work`, which is not part of this repository:
+
+```ini
+[user]
+	email = you@company.example
+	signingKey = ~/.ssh/id_ed25519_work.pub
+[core]
+	sshCommand = ssh -i ~/.ssh/id_ed25519_work -o IdentitiesOnly=yes
+```
+
+Create that key with a passphrase, using `ssh-keygen -t ed25519 -f ~/.ssh/id_ed25519_work`, and run `ssh-add --apple-use-keychain ~/.ssh/id_ed25519_work` so agents and other tools can still use it. Add it to your work GitHub account as both an authentication key and a signing key. If your organization uses SAML single sign-on, authorize the authentication key for it as well.
 
 ## Conda
 

@@ -17,8 +17,14 @@ brew bundle --file "$DOTFILES_DIR/Brewfile" || {
 }
 
 # Clean up unneeded packages and casks not in Brewfile
-echo "Cleaning up unneeded packages..."
-brew bundle cleanup --force --file "$DOTFILES_DIR/Brewfile" || status=1
+if [ -n "$DOTFILES_KEEP_UNLISTED_BREW" ]; then
+  echo "Keeping packages not in the Brewfile (DOTFILES_KEEP_UNLISTED_BREW is set):"
+  # Report only: it exits non-zero when it finds anything to remove.
+  brew bundle cleanup --file "$DOTFILES_DIR/Brewfile" || true
+else
+  echo "Cleaning up unneeded packages..."
+  brew bundle cleanup --force --file "$DOTFILES_DIR/Brewfile" || status=1
+fi
 
 echo "Checking Brewfile formulae for known vulnerabilities..."
 brew vulns --brewfile="$DOTFILES_DIR/Brewfile" || status=1

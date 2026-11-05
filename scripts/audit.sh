@@ -102,7 +102,9 @@ elif [ -d "$DOTFILES_DIR" ]; then
 else
   info "~/.dotfiles not found"
 fi
-[ -f "$DOTFILES_DIR/.tokens.zsh" ] && info "~/.dotfiles/.tokens.zsh exists; copy it into any new clone"
+for local_file in .tokens.zsh .local.zsh Brewfile.local; do
+  [ -f "$DOTFILES_DIR/$local_file" ] && info "~/.dotfiles/$local_file exists; copy it into any new clone"
+done
 
 section Git
 [ -L "$HOME/.gitconfig" ] &&

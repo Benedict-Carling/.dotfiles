@@ -185,6 +185,42 @@ class ShellTests(unittest.TestCase):
             self.assertIn(call, calls)
         self.assertIn("Update finished with errors", result.stderr)
 
+    def test_update_reports_instead_of_uninstalling_when_keeping_unlisted(self):
+        env = self.fake_antidote("print 'true'")
+        bin_dir, log = self.stubs(brew=f'''[[ $1 == --prefix ]] && echo "{env["HOMEBREW_PREFIX"]}" && exit 0
+[[ $1 == bundle && $2 == cleanup ]] && exit 1
+exit 0''')
+        env.update(PATH=f"{bin_dir}:/usr/bin:/bin", DOTFILES_KEEP_UNLISTED_BREW="1")
+        result = subprocess.run(["/bin/bash", str(ROOT / "update.sh")], env=env,
+                                capture_output=True, text=True)
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        calls = log.read_text()
+        self.assertIn("brew bundle cleanup --file", calls)
+        self.assertNotIn("--force", calls)
+
+    def test_local_zsh_overrides_shared_settings(self):
+        self.check('[[ $EDITOR == code* ]]')
+        (self.repo / ".local.zsh").write_text('export EDITOR=vim\n')
+        self.check('[[ $EDITOR == vim ]]')
+
+    def test_local_files_are_git_ignored(self):
+        for name in (".tokens.zsh", ".local.zsh", "Brewfile.local"):
+            subprocess.run(["/usr/bin/git", "-C", str(ROOT), "check-ignore", "-q", name], check=True)
+
+    def test_brewfile_includes_local_packages(self):
+        shutil.copy2(ROOT / "Brewfile", self.repo / "Brewfile")
+        env = dict(self.env, HOMEBREW_NO_AUTO_UPDATE="1",
+                   HOMEBREW_CACHE=str(REAL_HOME / "Library/Caches/Homebrew"))
+        def formulae():
+            result = subprocess.run([str(BREW / "bin/brew"), "bundle", "list", "--formula",
+                                     "--file", str(self.repo / "Brewfile")], env=env,
+                                    capture_output=True, text=True)
+            self.assertEqual(result.returncode, 0, result.stderr)
+            return result.stdout.split()
+        self.assertNotIn("local-only-formula", formulae())
+        (self.repo / "Brewfile.local").write_text('brew "local-only-formula"\n')
+        self.assertIn("local-only-formula", formulae())
+
     def test_identity_setup_adds_scopes_protocol_and_keys(self):
         gh = """case "$1 $2" in
   "auth status") echo "  - Token scopes: 'admin:public_key', 'repo'" ;;

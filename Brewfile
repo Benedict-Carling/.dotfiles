@@ -101,3 +101,7 @@ mas "Pages", id: 409201541
 mas "Keynote", id: 409183694
 mas "Numbers", id: 409203825
 mas "uBlock Origin Lite", id: 6745342698
+
+# Machine-specific packages; git-ignored.
+local_brewfile = File.expand_path("~/.dotfiles/Brewfile.local")
+instance_eval(File.read(local_brewfile)) if File.exist?(local_brewfile)

@@ -4,6 +4,10 @@
 # Sensitive configuration files
 .tokens.zsh
 
+# Machine-specific configuration, such as company settings
+.local.zsh
+Brewfile.local
+
 # Wallpapers and media files (these are large binary files)
 *.webp
 *.jpg

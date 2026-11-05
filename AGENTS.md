@@ -7,6 +7,7 @@ macOS dotfiles, forked per person. Lives at `~/.dotfiles` (the path is required)
 - **Brewfile is the source of truth.** `update.sh` uninstalls any Homebrew package not listed. Add tools with `brew bundle add -g <name>` (`--cask` for apps), then `brew bundle -g`.
 - **Shared vs personal Git config.** `git/config` (linked to `~/.config/git/config`) holds shared settings only. Identity, signing key and `commit.gpgSign` live in the untracked personal `~/.gitconfig`, written by `scripts/setup-git-identity.sh` from the GitHub account.
 - **`.zshrc` is the only Zsh startup file.** Put environment setup there. Secrets go in the git-ignored `.tokens.zsh`.
+- **This repository is public.** Company names, hosts and machine-specific settings go in the git-ignored `.local.zsh` and `Brewfile.local`.
 - **Plugin cache safety.** `scripts/bundle-plugins.zsh` builds the Antidote bundle for both startup and `update.sh`. A failed, empty or invalid build keeps the previous cache and reports the failure.
 - **Plugin load order.** The bundle is sourced last in `.zshrc`, after fzf and other widget integrations. Inside it, the OMZ git library loads before the git plugin, and syntax highlighting loads last.
 - **Scripts keep going.** `install.sh` and `update.sh` record failures in `status`, run every remaining step, then exit non-zero.
